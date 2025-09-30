@@ -25,7 +25,7 @@
         // Simple password protection
         function checkPassword() {
             var password = document.getElementById('passwordInput').value;
-            if (password === 'haz-voucher') {
+            if (password === 'haz') {
                 document.getElementById('passwordModal').style.display = 'none';
                 // Remove blur from background pages
                 var pages = document.querySelectorAll('.page');
@@ -35,6 +35,8 @@
                 document.body.style.overflow = 'auto';
                 // Show Chatbase chatbot after password is correct
                 showChatbaseWidget();
+                // Initialize mobile audio after user interaction
+                setTimeout(initMobileAudio, 500);
             } else {
                 alert('Password anda salah!');
                 document.getElementById('passwordInput').value = '';
@@ -132,6 +134,9 @@
                 audio.setAttribute('preload', 'metadata');
                 audio.setAttribute('controlsList', 'nodownload');
                 
+                // Force mobile audio to be ready
+                audio.load();
+                
                 // Handle mobile audio playback
                 audio.addEventListener('play', function() {
                     // Pause other audio elements when one starts playing
@@ -142,19 +147,37 @@
                     });
                 });
                 
-                // Handle mobile touch events
-                audio.addEventListener('touchstart', function() {
+                // Handle mobile touch events - CRITICAL for mobile
+                audio.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
                     audio.load();
+                    // Try to play immediately on touch
+                    setTimeout(() => {
+                        audio.play().catch(e => {
+                            console.log('Touch play failed, user interaction required');
+                        });
+                    }, 100);
                 });
                 
                 // Handle mobile click events
-                audio.addEventListener('click', function() {
+                audio.addEventListener('click', function(e) {
+                    e.preventDefault();
                     audio.load();
+                    // Try to play immediately on click
+                    setTimeout(() => {
+                        audio.play().catch(e => {
+                            console.log('Click play failed, user interaction required');
+                        });
+                    }, 100);
+                });
+                
+                // Handle play button clicks specifically
+                audio.addEventListener('play', function() {
+                    console.log('Audio started playing');
                 });
                 
                 // Handle mobile user interaction requirement
                 audio.addEventListener('canplay', function() {
-                    // Audio is ready to play
                     console.log('Audio ready for mobile playback');
                 });
                 
@@ -176,11 +199,45 @@
                 audio.addEventListener('loadedmetadata', function() {
                     console.log('Audio metadata loaded');
                 });
+                
+                // Add user interaction handler for mobile
+                audio.addEventListener('canplaythrough', function() {
+                    console.log('Audio fully loaded and ready');
+                });
             });
+        }
+        
+        // Additional mobile audio initialization
+        function initMobileAudio() {
+            // Wait for page to be fully loaded
+            if (document.readyState === 'complete') {
+                setupMobileAudio();
+            } else {
+                window.addEventListener('load', setupMobileAudio);
+            }
         }
         
         // Initialize mobile audio support
         document.addEventListener('DOMContentLoaded', setupMobileAudio);
+        
+        // Mobile audio test function
+        function testMobileAudio() {
+            const audioElements = document.querySelectorAll('.chapter-audio');
+            console.log('Found audio elements:', audioElements.length);
+            
+            audioElements.forEach((audio, index) => {
+                console.log(`Audio ${index + 1}:`, {
+                    src: audio.src,
+                    readyState: audio.readyState,
+                    networkState: audio.networkState,
+                    paused: audio.paused,
+                    duration: audio.duration
+                });
+            });
+        }
+        
+        // Test audio on page load
+        window.addEventListener('load', testMobileAudio);
         
     </script>
 </head>
