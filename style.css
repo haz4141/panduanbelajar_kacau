@@ -662,6 +662,61 @@ blockquote cite {
     font-style: italic;
 }
 
+/* Mobile audio optimizations */
+@media screen and (max-width: 768px) {
+    .chapter-audio {
+        width: 100%;
+        height: 60px;
+        border-radius: 30px;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    
+    .audio-player {
+        padding: 15px;
+        margin: 15px 0;
+    }
+    
+    .audio-player h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .audio-note {
+        font-size: 0.8rem;
+        margin-top: 8px;
+    }
+    
+    /* Mobile-specific audio controls */
+    .chapter-audio::-webkit-media-controls-panel {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 30px;
+        height: 60px;
+    }
+    
+    .chapter-audio::-webkit-media-controls-play-button,
+    .chapter-audio::-webkit-media-controls-pause-button {
+        background: white;
+        border-radius: 50%;
+        color: #667eea;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .chapter-audio::-webkit-media-controls-timeline {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        height: 4px;
+    }
+    
+    .chapter-audio::-webkit-media-controls-current-time-display,
+    .chapter-audio::-webkit-media-controls-time-remaining-display {
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+    }
+}
+
 /* Print Controls */
 .print-controls {
     position: fixed;
