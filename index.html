@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Background Music - Completely Hidden -->
-    <iframe 
-        id="backgroundMusic" 
-        src="https://www.youtube.com/embed/tJbDzPo9wWE?autoplay=1&loop=1&playlist=tJbDzPo9wWE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&fs=0&mute=0&enablejsapi=1"
-        style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0.1; pointer-events: none; border: none;"
-        allow="autoplay; encrypted-media"
-        allowfullscreen>
-    </iframe>
-    
-    <!-- Alternative Audio Element for Better Volume Control -->
-    <audio id="backgroundAudio" loop style="display: none;">
-        <source src="https://www.youtube.com/watch?v=tJbDzPo9wWE" type="audio/mpeg">
+    <!-- Background Music with Volume Control -->
+    <audio id="backgroundMusic" loop style="display: none;" volume="0.1">
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
     </audio>
+    
+    <!-- Background Music Volume Control -->
+    <div class="background-music-controls" style="position: fixed; top: 20px; left: 20px; z-index: 1000; background: rgba(255,255,255,0.9); padding: 10px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 14px; color: #333;">🎵 Background:</span>
+            <input type="range" id="backgroundVolumeSlider" min="0" max="100" value="10" style="width: 100px;">
+            <span id="backgroundVolumeValue" style="font-size: 12px; color: #666;">10%</span>
+        </div>
+    </div>
     
     <script>
         // Simple password protection
@@ -37,6 +38,8 @@
                 showChatbaseWidget();
                 // Initialize mobile audio after user interaction
                 setTimeout(initMobileAudio, 500);
+                // Initialize background music control
+                setTimeout(setupBackgroundMusicControl, 1000);
             } else {
                 alert('Password anda salah!');
                 document.getElementById('passwordInput').value = '';
@@ -83,17 +86,14 @@
             }
         }
         
-        // Force play on any user interaction to bypass autoplay restrictions
+        // Background music control
         function startMusic() {
-            const iframe = document.getElementById('backgroundMusic');
-            if (iframe && iframe.contentWindow) {
-                try {
-                    // Try to unmute and play
-                    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                } catch(e) {
-                    console.log('Music started');
-                }
+            const audio = document.getElementById('backgroundMusic');
+            if (audio) {
+                audio.volume = 0.1; // Set default volume to 10%
+                audio.play().catch(e => {
+                    console.log('Background music autoplay blocked, will start on user interaction');
+                });
             }
         }
         
@@ -109,17 +109,14 @@
             setTimeout(startMusic, 1000);
         });
         
-        // Force play on any user interaction to bypass autoplay restrictions
+        // Background music control
         function startMusic() {
-            const iframe = document.getElementById('backgroundMusic');
-            if (iframe && iframe.contentWindow) {
-                try {
-                    // Try to unmute and play
-                    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                } catch(e) {
-                    console.log('Music started');
-                }
+            const audio = document.getElementById('backgroundMusic');
+            if (audio) {
+                audio.volume = 0.1; // Set default volume to 10%
+                audio.play().catch(e => {
+                    console.log('Background music autoplay blocked, will start on user interaction');
+                });
             }
         }
         
@@ -282,20 +279,51 @@
         
         // Background music volume control
         function lowerBackgroundMusicVolume() {
-            const iframe = document.getElementById('backgroundMusic');
-            if (iframe) {
-                // Lower background music opacity when audio plays
-                iframe.style.opacity = '0.05';
+            const audio = document.getElementById('backgroundMusic');
+            if (audio) {
+                // Lower background music volume when audio plays
+                audio.volume = 0.02; // Very quiet
                 console.log('Background music volume lowered');
             }
         }
         
         function restoreBackgroundMusicVolume() {
-            const iframe = document.getElementById('backgroundMusic');
-            if (iframe) {
-                // Restore background music opacity when no audio is playing
-                iframe.style.opacity = '0.1';
-                console.log('Background music volume restored');
+            const audio = document.getElementById('backgroundMusic');
+            const slider = document.getElementById('backgroundVolumeSlider');
+            if (audio && slider) {
+                // Restore background music volume based on slider
+                const volume = slider.value / 100;
+                audio.volume = volume;
+                console.log('Background music volume restored to', volume);
+            }
+        }
+        
+        // Setup background music volume control
+        function setupBackgroundMusicControl() {
+            const slider = document.getElementById('backgroundVolumeSlider');
+            const value = document.getElementById('backgroundVolumeValue');
+            const audio = document.getElementById('backgroundMusic');
+            
+            if (slider && value && audio) {
+                slider.addEventListener('input', function() {
+                    const volume = this.value / 100;
+                    audio.volume = volume;
+                    value.textContent = this.value + '%';
+                    
+                    // Store volume preference
+                    localStorage.setItem('backgroundMusicVolume', this.value);
+                });
+                
+                // Load saved volume preference
+                const savedVolume = localStorage.getItem('backgroundMusicVolume');
+                if (savedVolume) {
+                    slider.value = savedVolume;
+                    value.textContent = savedVolume + '%';
+                    audio.volume = savedVolume / 100;
+                } else {
+                    // Set default volume
+                    audio.volume = 0.1;
+                }
             }
         }
         
