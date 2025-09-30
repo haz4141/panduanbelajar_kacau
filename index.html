@@ -107,57 +107,7 @@
             setTimeout(startMusic, 1000);
         });
         
-        // Volume control functionality
-        function setupVolumeControl() {
-            const volumeSlider = document.getElementById('volumeSlider');
-            const volumeValue = document.getElementById('volumeValue');
-            const iframe = document.getElementById('backgroundMusic');
-            
-            if (volumeSlider && volumeValue) {
-                volumeSlider.addEventListener('input', function() {
-                    const volume = this.value;
-                    volumeValue.textContent = volume + '%';
-                    
-                    // Control iframe volume using CSS opacity (most reliable method)
-                    if (iframe) {
-                        const opacity = volume / 100;
-                        iframe.style.opacity = opacity;
-                        
-                        // Try YouTube API volume control as backup
-                        try {
-                            iframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":"' + volume + '"}', '*');
-                        } catch(e) {
-                            // Fallback to opacity control
-                            console.log('Using opacity for volume control');
-                        }
-                    }
-                    
-                    // Store volume preference
-                    localStorage.setItem('musicVolume', volume);
-                });
-                
-                // Load saved volume preference
-                const savedVolume = localStorage.getItem('musicVolume');
-                if (savedVolume) {
-                    volumeSlider.value = savedVolume;
-                    volumeValue.textContent = savedVolume + '%';
-                    // Apply saved volume to iframe
-                    if (iframe) {
-                        const opacity = savedVolume / 100;
-                        iframe.style.opacity = opacity;
-                    }
-                } else {
-                    // Set default volume to 50%
-                    volumeSlider.value = 50;
-                    volumeValue.textContent = '50%';
-                    if (iframe) {
-                        iframe.style.opacity = 0.5;
-                    }
-                }
-            }
-        }
-        
-        // Enhanced music control
+        // Force play on any user interaction to bypass autoplay restrictions
         function startMusic() {
             const iframe = document.getElementById('backgroundMusic');
             if (iframe && iframe.contentWindow) {
@@ -170,9 +120,6 @@
                 }
             }
         }
-        
-        // Initialize volume control when page loads
-        document.addEventListener('DOMContentLoaded', setupVolumeControl);
         
     </script>
 </head>
@@ -223,6 +170,17 @@
             <h1 class="chapter-title">Kenapa Belajar Itu Ibadah?</h1>
         </div>
         <div class="chapter-content">
+            <!-- Audio Player for Bab 1 -->
+            <div class="audio-player">
+                <h3>🎧 Dengarkan Audio Bab 1</h3>
+                <audio controls class="chapter-audio">
+                    <source src="Bab1.mp3" type="audio/mpeg">
+                    <source src="Bab1.wav" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
+            </div>
+            
             <p class="drop-cap">Sering benar kita dengar soalan yang berbunyi begini: "Belajar itu perlu sangatkah? Bukankah yang lebih utama mencari rezeki, mengisi perut, menyusun kehidupan agar senang?" Soalan itu nampak mudah, namun jawapannya jauh lebih dalam daripada sekadar "ya" atau "tidak."</p>
             
             <p>Jika belajar hanya dipandang sebagai jalan mendapatkan gaji besar, pangkat tinggi, atau status di mata manusia,benarlah ia akan kelihatan hambar, membosankan, bahkan kadang menyesakkan. Tetapi Islam mengajar kita satu hakikat yang lebih mulia: belajar itu sendiri adalah ibadah. Ya, ibadah,setara dengan solat, puasa, zakat, bahkan haji. Bezanya, medan ibadah belajar ini amat luas, bergantung pada niat yang menyalakan di hati.</p>
@@ -276,6 +234,17 @@
             <h1 class="chapter-title">Persiapan Sebelum Buka Buku</h1>
         </div>
         <div class="chapter-content">
+            <!-- Audio Player for Bab 2 -->
+            <div class="audio-player">
+                <h3>🎧 Dengarkan Audio Bab 2</h3>
+                <audio controls class="chapter-audio">
+                    <source src="Bab2.mp3" type="audio/mpeg">
+                    <source src="Bab2.wav" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
+            </div>
+            
             <p class="drop-cap">Bayangkan seseorang mahu melangkah masuk ke rumah Allah, masjid yang suci. Tentu dia tidak main redah sahaja. Ada persiapan yang mesti dibuat: mengambil wuduk, mengenakan pakaian bersih, menyapu sedikit wangian. Semua itu tanda dia hadir dengan adab, kerana yang bakal ditemuinya ialah Allah.</p>
             
             <p>Begitu juga dengan belajar. Kita bukan sekadar berjumpa buku, bukan hanya menatap kertas dan dakwat. Kita sebenarnya sedang berjumpa dengan ilmu. Dan ilmu itu, hakikatnya milik Allah. Maka, wajarlah ada adab, ada persiapan hati dan jasad sebelum kita membuka halaman pertama.</p>
@@ -366,6 +335,17 @@
             <h1 class="chapter-title">Semasa Sedang Belajar</h1>
         </div>
         <div class="chapter-content">
+            <!-- Audio Player for Bab 3 -->
+            <div class="audio-player">
+                <h3>🎧 Dengarkan Audio Bab 3</h3>
+                <audio controls class="chapter-audio">
+                    <source src="Bab3.mp3" type="audio/mpeg">
+                    <source src="Bab3.wav" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
+            </div>
+            
             <p class="drop-cap">Sekarang kita sudah bersedia. Niat sudah diperbetulkan, wuduk sudah diambil, doa sudah dibaca. Meja pun sudah tersusun, telefon diletakkan jauh, hati terasa lapang. Maka tinggallah satu perkara sahaja: kita benar-benar terjun ke dalam lautan ilmu.</p>
             
             <p>Ramai pelajar gagal di titik inilah. Mereka duduk di hadapan buku selama dua jam, tetapi yang masuk ke dalam kepala cuma dua peratus. Kenapa jadi begitu? Sebab mereka belajar tanpa panduan, tanpa adab, dan tanpa roh. Islam, agama kita yang sempurna, bukan sahaja mengajar cara beribadah, malah juga mengajar cara menuntut ilmu dengan penuh adab, penuh keberkatan, dan penuh hikmah.</p>
@@ -870,14 +850,6 @@
     </div>
 
 
-    <!-- Music Volume Control -->
-    <div class="music-controls">
-        <div class="volume-control">
-            <span class="volume-icon">🔊</span>
-            <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
-            <span class="volume-value" id="volumeValue">50%</span>
-        </div>
-    </div>
 
     <!-- Print Controls (hidden by default) -->
     <div class="print-controls">
