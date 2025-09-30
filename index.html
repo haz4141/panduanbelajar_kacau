@@ -28,9 +28,45 @@
                     pages[i].style.filter = 'none';
                 }
                 document.body.style.overflow = 'auto';
+                // Show Chatbase chatbot after password is correct
+                showChatbaseWidget();
             } else {
                 alert('Password anda salah!');
                 document.getElementById('passwordInput').value = '';
+            }
+        }
+        
+        function showChatbaseWidget() {
+            // Load Chatbase widget only after password is correct
+            if (!window.chatbase || window.chatbase("getState") !== "initialized") {
+                window.chatbase = (...arguments) => {
+                    if (!window.chatbase.q) {
+                        window.chatbase.q = [];
+                    }
+                    window.chatbase.q.push(arguments);
+                };
+                window.chatbase = new Proxy(window.chatbase, {
+                    get(target, prop) {
+                        if (prop === "q") {
+                            return target.q;
+                        }
+                        return (...args) => target(prop, ...args);
+                    }
+                });
+            }
+            
+            const onLoad = function() {
+                const script = document.createElement("script");
+                script.src = "https://www.chatbase.co/embed.min.js";
+                script.id = "0VLDRulTvgGgr-pezX_Ve";
+                script.domain = "www.chatbase.co";
+                document.body.appendChild(script);
+            };
+            
+            if (document.readyState === "complete") {
+                onLoad();
+            } else {
+                window.addEventListener("load", onLoad);
             }
         }
         
@@ -65,6 +101,43 @@
         window.addEventListener('load', function() {
             setTimeout(startMusic, 1000);
         });
+        
+        // Volume control functionality
+        function setupVolumeControl() {
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumeValue = document.getElementById('volumeValue');
+            const iframe = document.getElementById('backgroundMusic');
+            
+            if (volumeSlider && volumeValue) {
+                volumeSlider.addEventListener('input', function() {
+                    const volume = this.value;
+                    volumeValue.textContent = volume + '%';
+                    
+                    // Update iframe volume (this is limited by browser security)
+                    if (iframe && iframe.contentWindow) {
+                        try {
+                            iframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":"' + volume + '"}', '*');
+                        } catch(e) {
+                            console.log('Volume control updated');
+                        }
+                    }
+                    
+                    // Store volume preference
+                    localStorage.setItem('musicVolume', volume);
+                });
+                
+                // Load saved volume preference
+                const savedVolume = localStorage.getItem('musicVolume');
+                if (savedVolume) {
+                    volumeSlider.value = savedVolume;
+                    volumeValue.textContent = savedVolume + '%';
+                }
+            }
+        }
+        
+        // Initialize volume control when page loads
+        document.addEventListener('DOMContentLoaded', setupVolumeControl);
+        
     </script>
 </head>
 <body>
@@ -760,9 +833,20 @@
         </div>
     </div>
 
+
+    <!-- Music Volume Control -->
+    <div class="music-controls">
+        <div class="volume-control">
+            <span class="volume-icon">🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
+            <span class="volume-value" id="volumeValue">50%</span>
+        </div>
+    </div>
+
     <!-- Print Controls (hidden by default) -->
     <div class="print-controls">
         <button onclick="window.print()" class="print-btn">Print / Export PDF</button>
     </div>
+
 </body>
 </html>
