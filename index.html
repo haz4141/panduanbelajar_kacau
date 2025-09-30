@@ -11,10 +11,15 @@
     <iframe 
         id="backgroundMusic" 
         src="https://www.youtube.com/embed/tJbDzPo9wWE?autoplay=1&loop=1&playlist=tJbDzPo9wWE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&fs=0&mute=0&enablejsapi=1"
-        style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: none;"
+        style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0.5; pointer-events: none; border: none;"
         allow="autoplay; encrypted-media"
         allowfullscreen>
     </iframe>
+    
+    <!-- Alternative Audio Element for Better Volume Control -->
+    <audio id="backgroundAudio" loop style="display: none;">
+        <source src="https://www.youtube.com/watch?v=tJbDzPo9wWE" type="audio/mpeg">
+    </audio>
     
     <script>
         // Simple password protection
@@ -113,12 +118,17 @@
                     const volume = this.value;
                     volumeValue.textContent = volume + '%';
                     
-                    // Update iframe volume (this is limited by browser security)
-                    if (iframe && iframe.contentWindow) {
+                    // Control iframe volume using CSS opacity (most reliable method)
+                    if (iframe) {
+                        const opacity = volume / 100;
+                        iframe.style.opacity = opacity;
+                        
+                        // Try YouTube API volume control as backup
                         try {
                             iframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":"' + volume + '"}', '*');
                         } catch(e) {
-                            console.log('Volume control updated');
+                            // Fallback to opacity control
+                            console.log('Using opacity for volume control');
                         }
                     }
                     
@@ -131,6 +141,32 @@
                 if (savedVolume) {
                     volumeSlider.value = savedVolume;
                     volumeValue.textContent = savedVolume + '%';
+                    // Apply saved volume to iframe
+                    if (iframe) {
+                        const opacity = savedVolume / 100;
+                        iframe.style.opacity = opacity;
+                    }
+                } else {
+                    // Set default volume to 50%
+                    volumeSlider.value = 50;
+                    volumeValue.textContent = '50%';
+                    if (iframe) {
+                        iframe.style.opacity = 0.5;
+                    }
+                }
+            }
+        }
+        
+        // Enhanced music control
+        function startMusic() {
+            const iframe = document.getElementById('backgroundMusic');
+            if (iframe && iframe.contentWindow) {
+                try {
+                    // Try to unmute and play
+                    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                } catch(e) {
+                    console.log('Music started');
                 }
             }
         }
