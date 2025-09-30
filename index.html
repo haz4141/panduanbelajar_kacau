@@ -121,6 +121,41 @@
             }
         }
         
+        // Mobile audio support
+        function setupMobileAudio() {
+            const audioElements = document.querySelectorAll('.chapter-audio');
+            
+            audioElements.forEach(audio => {
+                // Add mobile-specific attributes
+                audio.setAttribute('playsinline', '');
+                audio.setAttribute('webkit-playsinline', '');
+                audio.setAttribute('preload', 'metadata');
+                
+                // Handle mobile audio playback
+                audio.addEventListener('play', function() {
+                    // Pause other audio elements when one starts playing
+                    audioElements.forEach(otherAudio => {
+                        if (otherAudio !== audio && !otherAudio.paused) {
+                            otherAudio.pause();
+                        }
+                    });
+                });
+                
+                // Handle mobile touch events
+                audio.addEventListener('touchstart', function() {
+                    audio.load();
+                });
+                
+                // Handle mobile click events
+                audio.addEventListener('click', function() {
+                    audio.load();
+                });
+            });
+        }
+        
+        // Initialize mobile audio support
+        document.addEventListener('DOMContentLoaded', setupMobileAudio);
+        
     </script>
 </head>
 <body>
@@ -173,9 +208,10 @@
             <!-- Audio Player for Bab 1 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 1</h3>
-                <audio controls class="chapter-audio">
+                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
                     <source src="Bab1.mp3" type="audio/mpeg">
                     <source src="Bab1.wav" type="audio/wav">
+                    <source src="Bab1.ogg" type="audio/ogg">
                     Your browser does not support the audio element.
                 </audio>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
@@ -237,9 +273,10 @@
             <!-- Audio Player for Bab 2 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 2</h3>
-                <audio controls class="chapter-audio">
+                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
                     <source src="Bab2.mp3" type="audio/mpeg">
                     <source src="Bab2.wav" type="audio/wav">
+                    <source src="Bab2.ogg" type="audio/ogg">
                     Your browser does not support the audio element.
                 </audio>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
@@ -338,9 +375,10 @@
             <!-- Audio Player for Bab 3 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 3</h3>
-                <audio controls class="chapter-audio">
+                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
                     <source src="Bab3.mp3" type="audio/mpeg">
                     <source src="Bab3.wav" type="audio/wav">
+                    <source src="Bab3.ogg" type="audio/ogg">
                     Your browser does not support the audio element.
                 </audio>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
@@ -409,6 +447,18 @@
             <h1 class="chapter-title">Selepas Belajar</h1>
         </div>
         <div class="chapter-content">
+            <!-- Audio Player for Bab 4 -->
+            <div class="audio-player">
+                <h3>🎧 Dengarkan Audio Bab 4</h3>
+                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                    <source src="Bab4.mp3" type="audio/mpeg">
+                    <source src="Bab4.wav" type="audio/wav">
+                    <source src="Bab4.ogg" type="audio/ogg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
+            </div>
+            
             <p class="drop-cap">Ramai pelajar menyangka, selesai sudah belajar apabila buku ditutup dan pen diletakkan. Tetapi hakikatnya, perjalanan ilmu baru sahaja bermula selepas kita berhenti membaca. Jika kita tidak menjaga ilmu selepas belajar, banyak perkara akan hilang begitu sahaja, seperti pasir halus yang mengalir keluar di celah jari. Islam mengajar kita supaya mengikat ilmu dengan amalan, syukur, dan adab.</p>
             
             <h2>1. Ucap Alhamdulillah</h2>
@@ -474,6 +524,18 @@
             <h1 class="chapter-title">Amalan Tambahan untuk Kuat Ingatan</h1>
         </div>
         <div class="chapter-content">
+            <!-- Audio Player for Bab 5 -->
+            <div class="audio-player">
+                <h3>🎧 Dengarkan Audio Bab 5</h3>
+                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                    <source src="Bab5.mp3" type="audio/mpeg">
+                    <source src="Bab5.wav" type="audio/wav">
+                    <source src="Bab5.ogg" type="audio/ogg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
+            </div>
+            
             <p class="drop-cap">Kalau kita tanya pelajar, masalah paling besar dalam belajar bukanlah malas semata-mata, tetapi lupa. Baru semalam tekun membaca, esoknya sudah kabur. Sudah bersusah-payah menghafal panjang-panjang, masuk dewan peperiksaan tiba-tiba semuanya hilang dari ingatan.</p>
             
             <p>Namun, ulama silam telah meninggalkan kita jejak amalan. Mereka bukan sahaja belajar dengan tekun, bahkan mereka menjaga hati, lidah, dan gaya hidup agar akal sentiasa tajam. Rahsia mereka bukan sihir, bukan magik, tetapi gabungan doa, adab, dan disiplin hidup yang sihat serta penuh berkat.</p>
