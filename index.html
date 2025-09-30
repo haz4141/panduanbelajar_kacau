@@ -139,6 +139,7 @@
                 
                 // Handle mobile audio playback
                 audio.addEventListener('play', function() {
+                    console.log('Audio playing - pausing others');
                     // Pause other audio elements when one starts playing
                     audioElements.forEach(otherAudio => {
                         if (otherAudio !== audio && !otherAudio.paused) {
@@ -147,33 +148,36 @@
                     });
                 });
                 
+                // Handle mobile audio pause
+                audio.addEventListener('pause', function() {
+                    console.log('Audio paused');
+                });
+                
                 // Handle mobile touch events - CRITICAL for mobile
                 audio.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
+                    // Don't prevent default to allow native controls to work
                     audio.load();
-                    // Try to play immediately on touch
-                    setTimeout(() => {
-                        audio.play().catch(e => {
-                            console.log('Touch play failed, user interaction required');
-                        });
-                    }, 100);
                 });
                 
                 // Handle mobile click events
                 audio.addEventListener('click', function(e) {
-                    e.preventDefault();
+                    // Don't prevent default to allow native controls to work
                     audio.load();
-                    // Try to play immediately on click
-                    setTimeout(() => {
-                        audio.play().catch(e => {
-                            console.log('Click play failed, user interaction required');
-                        });
-                    }, 100);
                 });
                 
                 // Handle play button clicks specifically
                 audio.addEventListener('play', function() {
                     console.log('Audio started playing');
+                });
+                
+                // Handle pause button clicks specifically
+                audio.addEventListener('pause', function() {
+                    console.log('Audio paused');
+                });
+                
+                // Handle audio ended
+                audio.addEventListener('ended', function() {
+                    console.log('Audio ended');
                 });
                 
                 // Handle mobile user interaction requirement
@@ -238,6 +242,26 @@
         
         // Test audio on page load
         window.addEventListener('load', testMobileAudio);
+        
+        // Mobile audio control function
+        function handleMobileAudioControl(audio) {
+            if (audio.paused) {
+                // Pause all other audios first
+                const allAudios = document.querySelectorAll('.chapter-audio');
+                allAudios.forEach(otherAudio => {
+                    if (otherAudio !== audio && !otherAudio.paused) {
+                        otherAudio.pause();
+                    }
+                });
+                // Then play this audio
+                audio.play().catch(e => {
+                    console.log('Play failed:', e);
+                });
+            } else {
+                // Pause this audio
+                audio.pause();
+            }
+        }
         
     </script>
 </head>
