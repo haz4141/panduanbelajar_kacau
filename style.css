@@ -20,8 +20,12 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: relative;
-    filter: blur(5px);
     overflow: hidden;
+}
+
+/* Blur only the background content, not the modal */
+.page {
+    filter: blur(5px);
 }
 
 body::before {
