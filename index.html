@@ -8,17 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Background Music with Volume Control -->
-    <audio id="backgroundMusic" loop style="display: none;" volume="0.1">
-        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
-        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+    <audio id="backgroundMusic" loop style="display: none;" volume="0.05">
+        <source src="background-music.mp3" type="audio/mpeg">
     </audio>
     
     <!-- Background Music Volume Control -->
     <div class="background-music-controls" style="position: fixed; top: 20px; left: 20px; z-index: 1000; background: rgba(255,255,255,0.9); padding: 10px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
         <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 14px; color: #333;">🎵 Background:</span>
-            <input type="range" id="backgroundVolumeSlider" min="0" max="100" value="10" style="width: 100px;">
-            <span id="backgroundVolumeValue" style="font-size: 12px; color: #666;">10%</span>
+            <input type="range" id="backgroundVolumeSlider" min="0" max="100" value="5" style="width: 100px;">
+            <span id="backgroundVolumeValue" style="font-size: 12px; color: #666;">5%</span>
         </div>
     </div>
     
@@ -90,7 +89,7 @@
         function startMusic() {
             const audio = document.getElementById('backgroundMusic');
             if (audio) {
-                audio.volume = 0.1; // Set default volume to 10%
+                audio.volume = 0.05; // Set default volume to 5%
                 audio.play().catch(e => {
                     console.log('Background music autoplay blocked, will start on user interaction');
                 });
@@ -113,7 +112,7 @@
         function startMusic() {
             const audio = document.getElementById('backgroundMusic');
             if (audio) {
-                audio.volume = 0.1; // Set default volume to 10%
+                audio.volume = 0.05; // Set default volume to 5%
                 audio.play().catch(e => {
                     console.log('Background music autoplay blocked, will start on user interaction');
                 });
@@ -322,7 +321,7 @@
                     audio.volume = savedVolume / 100;
                 } else {
                     // Set default volume
-                    audio.volume = 0.1;
+                    audio.volume = 0.05;
                 }
             }
         }
