@@ -121,7 +121,7 @@
             }
         }
         
-        // Mobile audio support
+        // Enhanced mobile audio support
         function setupMobileAudio() {
             const audioElements = document.querySelectorAll('.chapter-audio');
             
@@ -130,6 +130,7 @@
                 audio.setAttribute('playsinline', '');
                 audio.setAttribute('webkit-playsinline', '');
                 audio.setAttribute('preload', 'metadata');
+                audio.setAttribute('controlsList', 'nodownload');
                 
                 // Handle mobile audio playback
                 audio.addEventListener('play', function() {
@@ -149,6 +150,31 @@
                 // Handle mobile click events
                 audio.addEventListener('click', function() {
                     audio.load();
+                });
+                
+                // Handle mobile user interaction requirement
+                audio.addEventListener('canplay', function() {
+                    // Audio is ready to play
+                    console.log('Audio ready for mobile playback');
+                });
+                
+                // Handle mobile audio errors
+                audio.addEventListener('error', function(e) {
+                    console.log('Audio error:', e);
+                    // Try to reload the audio
+                    setTimeout(() => {
+                        audio.load();
+                    }, 1000);
+                });
+                
+                // Handle mobile audio loading
+                audio.addEventListener('loadstart', function() {
+                    console.log('Audio loading started');
+                });
+                
+                // Handle mobile audio loaded
+                audio.addEventListener('loadedmetadata', function() {
+                    console.log('Audio metadata loaded');
                 });
             });
         }
