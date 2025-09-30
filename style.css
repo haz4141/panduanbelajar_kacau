@@ -1,0 +1,631 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+body {
+    font-family: 'Crimson Text', serif;
+    color: #2c3e50;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    margin: 0;
+    padding: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    filter: blur(5px);
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(102, 126, 234, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Page Layout */
+.page {
+    width: 210mm; /* A4 width */
+    min-height: 297mm; /* A4 height */
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.1);
+    page-break-after: always;
+    position: relative;
+    padding: 20mm;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+}
+
+.page::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-30%, 30%);
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .page {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+    
+    .print-controls {
+        display: none;
+    }
+    
+    @page {
+        size: A4 portrait;
+        margin: 20mm;
+    }
+}
+
+/* Cover Page Styles */
+.cover-page {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+.cover-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+
+/* Table of Contents */
+.toc-page {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.toc-page::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 40%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    transform: rotate(15deg);
+}
+
+.page-header {
+    border-bottom: 3px solid transparent;
+    background: linear-gradient(90deg, #667eea, #764ba2) left bottom/100% 3px no-repeat;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.page-header h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.table-of-contents ul {
+    list-style: none;
+    padding: 0;
+}
+
+.table-of-contents li {
+    margin: 1rem 0;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.table-of-contents li::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.table-of-contents li:hover::before {
+    opacity: 1;
+}
+
+.table-of-contents a {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.table-of-contents a:hover {
+    color: #667eea;
+    transform: translateX(10px);
+}
+
+/* Chapter Pages */
+.chapter-page {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    position: relative;
+}
+
+.chapter-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #667eea, #764ba2);
+    opacity: 0.3;
+}
+
+.chapter-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    display: block;
+    position: relative;
+}
+
+.chapter-number::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 1px;
+}
+
+.chapter-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0;
+    position: relative;
+}
+
+.chapter-content {
+    margin-top: 2rem;
+    flex: 1;
+}
+
+/* Typography */
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 1.5rem 0 1rem;
+    line-height: 1.3;
+    position: relative;
+}
+
+h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #34495e;
+    margin: 2rem 0 1rem;
+    line-height: 1.4;
+    position: relative;
+    padding-left: 20px;
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #34495e;
+    margin: 1.5rem 0 0.75rem;
+    line-height: 1.4;
+    position: relative;
+    padding-left: 15px;
+}
+
+h3::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #667eea;
+    font-size: 0.8rem;
+}
+
+p {
+    margin: 1rem 0;
+    text-align: justify;
+    hyphens: auto;
+    orphans: 3;
+    widows: 3;
+}
+
+/* Drop Cap for First Paragraph */
+.drop-cap {
+    text-indent: 0;
+    position: relative;
+}
+
+.drop-cap::first-letter {
+    float: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0.1rem 0.5rem 0 0;
+    padding-top: 0.1rem;
+    position: relative;
+}
+
+.drop-cap::first-letter::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    opacity: 0.3;
+}
+
+/* Lists */
+ul, ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+    position: relative;
+}
+
+li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+    position: relative;
+}
+
+li::marker {
+    color: #667eea;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 2rem 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+    border-left: 4px solid transparent;
+    border-image: linear-gradient(180deg, #667eea, #764ba2) 1;
+    font-style: italic;
+    position: relative;
+    quotes: """ """ "'" "'";
+    border-radius: 0 8px 8px 0;
+}
+
+blockquote::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    font-size: 4rem;
+    color: #667eea;
+    opacity: 0.3;
+    font-family: serif;
+}
+
+blockquote p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #495057;
+    position: relative;
+    z-index: 1;
+}
+
+blockquote cite {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-style: normal;
+    color: #667eea;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Author Page */
+.author-page {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.author-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.author-bio {
+    max-width: 500px;
+    text-align: center;
+}
+
+.author-bio p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: left;
+    margin: 1.5rem 0;
+}
+
+/* Print Controls */
+.print-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.print-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+}
+
+.print-btn:hover {
+    background: #5a6fd8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .page {
+        width: 100%;
+        margin: 0;
+        box-shadow: none;
+        padding: 15mm;
+    }
+    
+    .book-title {
+        font-size: 2.5rem;
+    }
+    
+    .book-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .chapter-title {
+        font-size: 1.8rem;
+    }
+    
+    .print-controls {
+        position: relative;
+        top: auto;
+        right: auto;
+        text-align: center;
+        margin: 2rem 0;
+    }
+}
+
+/* Page Numbering (for print) */
+@page {
+    @bottom-center {
+        content: counter(page);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+}
+
+/* Hide page numbers on cover and TOC */
+.cover-page, .toc-page {
+    counter-reset: page;
+}
+
+/* Additional Styling for Better Readability */
+.chapter-content::after {
+    content: "";
+    display: block;
+    height: 2rem;
+}
+
+/* Smooth scrolling for internal links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+a:focus,
+button:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Password Modal Styles */
+.password-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    padding: 0;
+    position: relative;
+}
+
+.modal-body {
+    padding: 2rem;
+    text-align: center;
+}
+
+.modal-body h3 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+}
+
+.modal-body input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.modal-body input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Blur effect for background */
+body.blurred {
+    filter: blur(5px);
+    overflow: hidden;
+}
+
+body.blurred .page {
+    pointer-events: none;
+}
+
+/* Responsive modal */
+@media screen and (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .modal-header {
+        padding: 1.5rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .modal-footer {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+}

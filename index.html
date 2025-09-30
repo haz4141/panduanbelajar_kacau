@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menuntut Ilmu Dengan Hati ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Background Music - Completely Hidden -->
+    <iframe 
+        id="backgroundMusic" 
+        src="https://www.youtube.com/embed/tJbDzPo9wWE?autoplay=1&loop=1&playlist=tJbDzPo9wWE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&fs=0&mute=0&enablejsapi=1"
+        style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: none;"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+    </iframe>
+    
+    <script>
+        // Pure JavaScript password protection
+        function showPasswordPrompt() {
+            var password = prompt("Enter password to access website:");
+            if (password === 'haz-voucher') {
+                // Password correct - hide modal and remove blur
+                document.getElementById('passwordModal').style.display = 'none';
+                document.body.style.filter = 'none';
+                document.body.style.overflow = 'auto';
+            } else if (password !== null) {
+                // Wrong password - show error and try again
+                alert('Password anda salah!');
+                showPasswordPrompt(); // Try again
+            } else {
+                // User cancelled - show again
+                showPasswordPrompt();
+            }
+        }
+        
+        // Show password prompt immediately when page loads
+        window.onload = function() {
+            showPasswordPrompt();
+        };
+        
+        // Force play on any user interaction to bypass autoplay restrictions
+        function startMusic() {
+            const iframe = document.getElementById('backgroundMusic');
+            if (iframe && iframe.contentWindow) {
+                try {
+                    // Try to unmute and play
+                    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                } catch(e) {
+                    console.log('Music started');
+                }
+            }
+        }
+        
+        // Start music on first user interaction
+        document.addEventListener('click', startMusic, { once: true });
+        document.addEventListener('keydown', startMusic, { once: true });
+        document.addEventListener('scroll', startMusic, { once: true });
+        document.addEventListener('mousemove', startMusic, { once: true });
+        document.addEventListener('touchstart', startMusic, { once: true });
+        
+        // Also try to start immediately when page loads
+        window.addEventListener('load', function() {
+            setTimeout(startMusic, 1000);
+        });
+    </script>
+</head>
+<body>
+    <!-- Password Protection Modal -->
+    <div id="passwordModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; display: flex; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.5); border: 3px solid #333;">
+            <h2 style="margin: 0 0 25px 0; font-size: 24px; color: #333; font-weight: bold;">🔐 ENTER PASSWORD</h2>
+            <input type="password" id="passwordInput" placeholder="Type password here..." style="width: 250px; padding: 15px; border: 3px solid #333; border-radius: 8px; font-size: 18px; text-align: center; margin-bottom: 20px;" onkeypress="handleKeyPress(event)">
+            <br>
+            <button onclick="checkPassword()" style="background: #333; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold;">SUBMIT</button>
+        </div>
+    </div>
+
+    <!-- Cover Page -->
+    <div class="page cover-page">
+        <div class="cover-background">
+            <img src="frontpage.jpg" alt="Panduan Belajar Cover" class="cover-image">
+        </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="page toc-page">
+        <div class="page-header">
+            <h1>Table of Contents</h1>
+        </div>
+        <div class="toc-content">
+                <nav class="table-of-contents">
+                <ul>
+                    <li><a href="#chapter1">Bab 1: Kenapa Belajar Itu Ibadah?</a></li>
+                    <li><a href="#chapter2">Bab 2: Persiapan Sebelum Buka Buku</a></li>
+                    <li><a href="#chapter3">Bab 3: Semasa Sedang Belajar</a></li>
+                    <li><a href="#chapter4">Bab 4: Selepas Belajar</a></li>
+                    <li><a href="#chapter5">Bab 5: Amalan Tambahan untuk Kuat Ingatan</a></li>
+                    <li><a href="#chapter6">Bab 6: Belajar Gaya Islam dalam Zaman Moden</a></li>
+                    <li><a href="#chapter7">Bab 7: Kisah Inspirasi</a></li>
+                    <li><a href="#chapter8">Bab 8: Strategi Praktikal Belajar Gaya Islam</a></li>
+                    <li><a href="#chapter9">Bab 9: Penutup dan Wasiat Ilmu</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Chapter 1 -->
+    <div class="page chapter-page" id="chapter1">
+        <div class="page-header">
+            <span class="chapter-number">Bab 1</span>
+            <h1 class="chapter-title">Kenapa Belajar Itu Ibadah?</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Sering benar kita dengar soalan yang berbunyi begini: "Belajar itu perlu sangatkah? Bukankah yang lebih utama mencari rezeki, mengisi perut, menyusun kehidupan agar senang?" Soalan itu nampak mudah, namun jawapannya jauh lebih dalam daripada sekadar "ya" atau "tidak."</p>
+            
+            <p>Jika belajar hanya dipandang sebagai jalan mendapatkan gaji besar, pangkat tinggi, atau status di mata manusia,benarlah ia akan kelihatan hambar, membosankan, bahkan kadang menyesakkan. Tetapi Islam mengajar kita satu hakikat yang lebih mulia: belajar itu sendiri adalah ibadah. Ya, ibadah,setara dengan solat, puasa, zakat, bahkan haji. Bezanya, medan ibadah belajar ini amat luas, bergantung pada niat yang menyalakan di hati.</p>
+            
+            <h2>Belajar Kerana Apa?</h2>
+            <p>Allah telah mengingatkan kita dalam al-Qur'an, "Katakanlah: Adakah sama orang yang mengetahui dengan orang yang tidak mengetahui?" (Surah Az-Zumar: 9)</p>
+            
+            <p>Ayat ini ringkas, tetapi hakikatnya dalam. Orang yang berilmu tidak pernah sama dengan yang kosong fikirannya. Jika belajar hanya untuk menjawab kertas peperiksaan, lalu sejurus selepas itu melupakan semuanya,itu kerugian. Tetapi jika belajar dengan niat menolong sesama, membina kebaikan, mengelak kesilapan, mengenal Allah… maka setiap helaian buku yang dibuka, setiap pena yang menari di atas kertas, setiap detik yang dihabiskan di meja, semuanya tercatat sebagai pahala.</p>
+            
+            <p>Belajar Matematik misalnya, bukan sekadar mengira angka,tetapi melatih kita mengira zakat dengan tepat, membahagi faraid dengan adil. Belajar Sains, bukan semata memahami hukum fizik atau kimia,tetapi menyaksikan betapa agung ciptaan Allah di langit dan bumi. Belajar Bahasa, bukan hanya merangkai kata,tetapi membuka jalan untuk memahami kalam Allah dengan lebih mendalam. Begitulah indahnya jika niatnya betul: seluruh ilmu menjadi ibadah.</p>
+            
+            <h2>Niat, Niat, Niat</h2>
+            <p>Rasulullah SAW pernah bersabda, "Sesungguhnya setiap amalan itu bergantung kepada niat." Maka, ketika kita membuka buku, ayuh betulkan hati:</p>
+            
+            <ul>
+                <li>"Ya Allah, aku belajar kerana-Mu."</li>
+                <li>"Aku menuntut ilmu agar aku tidak hidup dalam kejahilan."</li>
+                <li>"Aku ingin menjadi insan berguna untuk keluargaku, masyarakatku, dan agamaku."</li>
+            </ul>
+            
+            <p>Andai niat kita lurus, meskipun hanya membaca sehelai dua muka surat,pahala tetap mengalir. Tetapi andai niat menyimpang, meskipun mampu menghafal satu perpustakaan, tetap kosong di sisi Allah.</p>
+            
+            <h2>Ulama Dulu-Dulu: Ilmu Jadi Cahaya</h2>
+            <p>Sejarah menjadi saksi. Imam Syafie, sejak mudanya menjaga penuh adab ketika belajar. Kitab tidak disentuh dengan kasar, guru dihormati dengan penuh takzim. Kesannya, Allah anugerahkan kepadanya ingatan luar biasa,sekali baca, terus melekat di hati.</p>
+            
+            <p>Imam Ahmad bin Hanbal pula sanggup menempuh ribuan kilometer hanya untuk satu hadis. Zaman itu tiada kapal terbang, tiada internet, tiada telefon pintar. Namun beliau tetap melangkah kerana sedar menuntut ilmu adalah ibadah agung.</p>
+            
+            <p>Jika ulama dahulu rela berkorban masa, tenaga, bahkan keselesaan hidup demi ilmu, mengapa kita tidak mampu mengorbankan sedikit masa bermain game, menonton Netflix, atau menatal TikTok?</p>
+            
+            <blockquote>
+                <p>"Barang siapa menempuh jalan untuk mencari ilmu, Allah mudahkan baginya jalan menuju syurga."</p>
+                <cite>, Rasulullah SAW</cite>
+            </blockquote>
+            
+            <h2>Belajar Untuk Dunia & Akhirat</h2>
+            <p>Seorang Muslim tidak boleh berat sebelah. Jika belajar tinggi tetapi lalai solat → rugi. Jika rajin ibadah tetapi malas belajar → juga rugi.</p>
+            
+            <p>Belajar gaya Islam menuntut keseimbangan: ilmu dunia dan ilmu akhirat. Ibarat kereta dan stereng,enjin tanpa stereng akan meluncur ke gaung; stereng tanpa enjin pula tidak akan bergerak. Kedua-duanya mesti ada, barulah sampai ke destinasi.</p>
+            
+            <h2>Kesimpulan Bab 1</h2>
+            <p>Belajar bukan sekadar mengejar keputusan peperiksaan, bukan juga semata mencari kekayaan. Belajar adalah ibadah, adalah cahaya, adalah jalan menuju syurga.</p>
+            
+            <p>Setiap kali buku dibuka dengan niat kerana Allah, kita sedang menambah bekal akhirat. Setiap kali kita memahami sesuatu ilmu, itu cahaya Allah sedang memasuki hati. Dan bila kesedaran ini hidup dalam diri, kita tidak lagi belajar kerana tekanan guru, tetapi kerana pandangan Allah yang sentiasa menilai.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="page chapter-page" id="chapter2">
+        <div class="page-header">
+            <span class="chapter-number">Bab 2</span>
+            <h1 class="chapter-title">Persiapan Sebelum Buka Buku</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Bayangkan seseorang mahu melangkah masuk ke rumah Allah, masjid yang suci. Tentu dia tidak main redah sahaja. Ada persiapan yang mesti dibuat: mengambil wuduk, mengenakan pakaian bersih, menyapu sedikit wangian. Semua itu tanda dia hadir dengan adab, kerana yang bakal ditemuinya ialah Allah.</p>
+            
+            <p>Begitu juga dengan belajar. Kita bukan sekadar berjumpa buku, bukan hanya menatap kertas dan dakwat. Kita sebenarnya sedang berjumpa dengan ilmu. Dan ilmu itu, hakikatnya milik Allah. Maka, wajarlah ada adab, ada persiapan hati dan jasad sebelum kita membuka halaman pertama.</p>
+            
+            <h2>1. Betulkan Niat</h2>
+            <p>Langkah pertama, niat. Niat inilah yang membezakan antara ibadah dengan sekadar aktiviti biasa. Jika niat salah, semua jadi kosong; jika niat betul, setiap detik belajar dicatat sebagai pahala.</p>
+            
+            <p>Bisikkan dalam hati, atau lafazkan perlahan:</p>
+            
+            <ul>
+                <li>"Ya Allah, aku belajar kerana-Mu."</li>
+                <li>"Aku mahu ilmu ini menjadi manfaat, bukan sekadar simpanan."</li>
+                <li>"Aku ingin menjadi insan berguna untuk mak ayah, masyarakat, dan agamaku."</li>
+            </ul>
+            
+            <p>Niat tidak perlu panjang berjela. Tetapi bila ia hadir dari hati yang ikhlas, jiwa menjadi fokus, fikiran jadi tertib, hati jadi lapang.</p>
+            
+            <h2>2. Ambil Wuduk</h2>
+            <p>Sebelum menatap buku, pergilah ambil wuduk. Air wuduk itu ibarat charger yang mengecas semula otak dan hati. Rasakan sendiri , selepas berwuduk, kepala terasa ringan, dada terasa lapang.</p>
+            
+            <p>Ulama dahulu sangat menjaga wuduk ketika belajar. Ada yang tidak berani menyentuh kitab tanpa wuduk, kerana mereka percaya ilmu itu cahaya dari Allah, dan cahaya tidak akan hinggap pada hati yang keruh. Jika mereka boleh menghormati ilmu sebegitu, apakah kita tidak mampu?</p>
+            
+            <h2>3. Doa Sebelum Belajar</h2>
+            <p>Doa ibarat nombor telefon terus kepada Allah. Dengan doa, kita mohon dipermudah memahami, dimudahkan mengingat, ditetapkan hati.</p>
+            
+            <p>Doa ringkas yang diwarisi turun-temurun:</p>
+            
+            <blockquote>
+                <p>اللَّهُمَّ افْتَحْ عَلَيَّ حِكْمَتَكَ، وَانْشُرْ عَلَيَّ رَحْمَتَكَ، يَا ذَا الْجَلَالِ وَالْإِكْرَامِ</p>
+                <p>Allahummaftah 'alayya hikmataka, wansyur 'alayya rahmataka, ya Dzal Jalali wal Ikram.</p>
+                <cite>(Maksudnya: Ya Allah, bukakanlah ke atasku hikmah-Mu, dan limpahkanlah rahmat-Mu kepadaku, wahai Tuhan Yang Maha Mulia lagi Maha Pemurah.)</cite>
+            </blockquote>
+            
+            <p>Dan jika doa panjang belum hafal, cukup dengan kalimah sederhana:</p>
+            
+            <blockquote>
+                <p>رَبِّ زِدْنِي عِلْمًا</p>
+                <p>Rabbi zidni 'ilma.</p>
+                <cite>(Yang bermaksud: Ya Tuhanku, tambahkanlah ilmuku.)</cite>
+            </blockquote>
+            
+            <p>Ringkas, tetapi dalam maknanya.</p>
+            
+            <h2>4. Sediakan Tempat Belajar</h2>
+            <p>Tempat belajar juga cermin kepada jiwa. Jika meja penuh habuk, buku bertindih, sisa makanan bersepah , otak kita pun ikut berserabut.</p>
+            
+            <p>Bersihkan meja, susun buku mengikut subjek, pastikan cahaya terang. Jika mahu lebih berkat, letakkan sejadah berdekatan. Bila penat nanti, mudah untuk sujud dua rakaat, memohon kekuatan baru.</p>
+            
+            <p>Jika rasa mengantuk, harumkan ruang dengan bauan yang segar. Islam sendiri menekankan kebersihan dan keharuman, kerana suasana mempengaruhi hati.</p>
+            
+            <h2>5. Hati Tenang, Badan Segar</h2>
+            <p>Ilmu hanya masuk ke hati yang tenang. Jika belajar dengan marah, ilmu akan melantun pergi. Jika belajar dengan perut kosong, cepat moody. Jika belajar ketika mengantuk, kepala asyik jatuh ke meja.</p>
+            
+            <p>Maka, sebelum membuka buku:</p>
+            
+            <ul>
+                <li>Jika penat → rehat sebentar, tarik nafas dalam, atau tidur sekejap 15 minit.</li>
+                <li>Jika lapar → makan sekadar mengalas perut, jangan sampai terlalu kenyang.</li>
+                <li>Jika marah → istighfar, redakan hati.</li>
+            </ul>
+            
+            <p>Barulah hati bersedia menerima cahaya ilmu.</p>
+            
+            <h2>6. Matikan Gangguan</h2>
+            <p>Inilah cabaran paling besar zaman ini: telefon. Ia seakan syaitan moden. Baru lima minit belajar, tangan sudah gatal mahu menyemak WhatsApp, Instagram, TikTok. Satu jam hilang begitu sahaja, buku tidak berganjak.</p>
+            
+            <p>Caranya mudah:</p>
+            
+            <ul>
+                <li>Letakkan telefon jauh dari meja.</li>
+                <li>Gunakan focus mode.</li>
+                <li>Jika perlu internet, buka hanya satu tab, bukan dua puluh.</li>
+            </ul>
+            
+            <p>Renungkan , ulama dahulu sanggup belajar berjam-jam hanya ditemani pelita minyak. Sedangkan kita, dengan cahaya LED terang benderang, masih kalah kerana sibuk menatal skrin.</p>
+            
+            <h2>Kesimpulan Bab 2</h2>
+            <p>Persiapan sebelum belajar bukanlah perkara remeh. Ia mungkin mengambil masa 10 minit sahaja, tetapi kesannya besar. Niat dibetulkan, wuduk menyucikan, doa membuka jalan, tempat belajar dikemaskan, hati ditenangkan, gangguan dipadamkan.</p>
+            
+            <p>Belajar dengan hati bersih bukan sahaja menjadikan kita mudah faham dan mudah ingat, bahkan yang lebih penting , ia membawa keberkatan. Dan keberkatan itulah yang menjadikan ilmu bercahaya, bermanfaat untuk dunia dan akhirat.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="page chapter-page" id="chapter3">
+        <div class="page-header">
+            <span class="chapter-number">Bab 3</span>
+            <h1 class="chapter-title">Semasa Sedang Belajar</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Sekarang kita sudah bersedia. Niat sudah diperbetulkan, wuduk sudah diambil, doa sudah dibaca. Meja pun sudah tersusun, telefon diletakkan jauh, hati terasa lapang. Maka tinggallah satu perkara sahaja: kita benar-benar terjun ke dalam lautan ilmu.</p>
+            
+            <p>Ramai pelajar gagal di titik inilah. Mereka duduk di hadapan buku selama dua jam, tetapi yang masuk ke dalam kepala cuma dua peratus. Kenapa jadi begitu? Sebab mereka belajar tanpa panduan, tanpa adab, dan tanpa roh. Islam, agama kita yang sempurna, bukan sahaja mengajar cara beribadah, malah juga mengajar cara menuntut ilmu dengan penuh adab, penuh keberkatan, dan penuh hikmah.</p>
+            
+            <h2>1. Mulakan dengan Bismillah</h2>
+            <p>Apa jua langkah pertama, jangan lupa "Bismillah." Kalimah pendek ini bukan sekadar pembuka bicara, tetapi ia adalah kunci kepada rahmat. Dengan lafaz Bismillah, kita sebenarnya sedang menjemput Allah untuk campur tangan dalam urusan belajar kita.</p>
+            
+            <p>Kalau mahu menulis nota, ucaplah Bismillah. Kalau mahu membaca buku, mulakan dengan Bismillah. Kalau mahu membuka laptop sekalipun, jangan lupa lafaz itu. Nampak seakan ringan, tetapi dengan kalimah itu Allah memelihara kita daripada gangguan syaitan dan mengurniakan keberkatan.</p>
+            
+            <h2>2. Fokus pada Faham, Bukan Hafal Buta</h2>
+            <p>Kesilapan ramai pelajar ialah mereka membaca buku seperti membaca resit kedai,laju, tetapi kosong. Akhirnya bila di dewan peperiksaan, fikiran jadi gelap. Islam mengajar kita bertadabbur al-Qur'an: membaca perlahan, memahami makna, merenung isi. Begitu juga dengan ilmu lain.</p>
+            
+            <p>Kalau membaca Sains, kaitkan dengan kebesaran Allah. Kalau membaca Matematik, renungi sistem dan keadilan Allah. Kalau membaca Sejarah, ambil iktibar bagaimana umat Islam bangun dan jatuh. Belajar bukan untuk menimbun hafalan semata-mata, tetapi untuk memahami, menghayati, dan mengambil hikmah.</p>
+            
+            <h2>3. Tangan Bergerak, Otak Ingat</h2>
+            <p>Mata sahaja yang bergerak membaca akan cepat bosan. Tetapi bila tangan turut menulis, otak jadi aktif. Ulama dahulu, setiap kali guru mereka bercakap, mereka akan mencatat. Begitu juga kita hari ini:</p>
+            
+            <ul>
+                <li>Buat nota ringkas,</li>
+                <li>Lukis peta minda,</li>
+                <li>Catatkan poin penting.</li>
+            </ul>
+            
+            <p>Menulis itu ibarat mengikat ilmu dengan tali yang kukuh. Kalau tidak menulis, ilmu mudah meluncur keluar tanpa kita sedari.</p>
+            
+            <h2>4. Istighfar Bila Tersangkut</h2>
+            <p>Kadang-kadang ketika belajar, kepala terasa tepu. Satu ayat dibaca lima kali, tetap tidak masuk. Saat itu, jangan paksa diri. Berhenti sebentar. Tarik nafas perlahan. Ucapkan zikir ringkas: Astaghfirullah, Subhanallah, atau doa ringkas, "Ya Allah, mudahkan aku." InsyaAllah, selepas itu hati menjadi tenang, fikiran kembali segar, dan ilmu lebih mudah melekat.</p>
+            
+            <h2>5. Solat Sunat Sebagai Charger</h2>
+            <p>Apabila otak mulai penat selepas belajar lama, bangunlah, ambil wuduk, dan dirikan solat sunat dua rakaat. Ulama dahulu selalu menjadikan solat sebagai "charger." Mereka berkata: "Setiap kali aku buntu, aku pergi solat, lalu Allah bukakan jalan." Kadang kala kita rasa buntu bukan kerana soalan terlalu susah, tetapi kerana kita lupa memanggil Allah untuk membantu.</p>
+            
+            <h2>6. Jangan Tinggal Solat Fardhu</h2>
+            <p>Inilah perkara yang paling utama. Ada pelajar sanggup meninggalkan solat kerana sibuk mengejar peperiksaan. Itu satu kesilapan besar. Solat fardhu lah sebenarnya "booster" otak yang paling kuat. Ingatlah, ilmu datang daripada Allah. Kalau kita meninggalkan solat, bermakna kita sedang menutup sendiri pintu rezeki ilmu.</p>
+            
+            <h2>7. Belajar Ikut Slot Kecil, Bukan Maraton</h2>
+            <p>Islam mengajar kesederhanaan dalam semua hal. Begitu juga belajar. Memaksa diri duduk lima jam tanpa henti bukanlah cara bijak. Otak akan tepu, hati jadi beku.</p>
+            
+            <p>Cuba guna jadual yang seimbang:</p>
+            
+            <ul>
+                <li>Belajar 40 minit, rehat 10 minit.</li>
+                <li>Atau belajar 1 jam, kemudian bangun dan regangkan badan 15 minit.</li>
+            </ul>
+            
+            <p>Rehat itu bukan bererti bermain game tanpa henti. Rehat yang betul adalah tarik nafas, minum air, berjalan seketika, atau berzikir dengan ringan.</p>
+            
+            <h2>8. Jaga Adab dengan Buku</h2>
+            <p>Buku adalah pintu ilmu. Jangan letak di lantai, jangan jadikan bantal, jangan conteng sembarangan. Ulama dahulu sangat menjaga kitab mereka,ada yang membalutnya indah, ada yang menyimpannya penuh hormat. Adab dengan buku sebenarnya adalah adab dengan ilmu. Bila kita hormat ilmu, Allah mudahkan kita untuk menguasainya.</p>
+            
+            <h2>Kesimpulan Bab 3</h2>
+            <p>Belajar itu bukan sekadar duduk di depan buku lalu membaca dan menghafal. Ada adabnya, ada caranya. Mulakan dengan Bismillah, fokus kepada kefahaman, catat nota dengan tangan, berzikir bila tersangkut, solat bila penat, jangan sekali-kali tinggal solat fardhu, belajar dengan slot kecil yang sederhana, dan hormati buku sebagai sumber ilmu.</p>
+            
+            <p>Apabila kita belajar dengan cara ini, suasana belajar tidak lagi terasa membosankan. Sebaliknya hati terasa tenang, fikiran terasa lapang, dan ilmu yang dibaca lebih mudah melekat serta menjadi sebahagian daripada diri kita. Itulah belajar yang berkat.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 4 -->
+    <div class="page chapter-page" id="chapter4">
+        <div class="page-header">
+            <span class="chapter-number">Bab 4</span>
+            <h1 class="chapter-title">Selepas Belajar</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Ramai pelajar menyangka, selesai sudah belajar apabila buku ditutup dan pen diletakkan. Tetapi hakikatnya, perjalanan ilmu baru sahaja bermula selepas kita berhenti membaca. Jika kita tidak menjaga ilmu selepas belajar, banyak perkara akan hilang begitu sahaja, seperti pasir halus yang mengalir keluar di celah jari. Islam mengajar kita supaya mengikat ilmu dengan amalan, syukur, dan adab.</p>
+            
+            <h2>1. Ucap Alhamdulillah</h2>
+            <p>Sebaik sahaja selesai belajar, lafazkanlah Alhamdulillah. Kenapa? Sebab bukan kita yang hebat hingga mampu membaca dan memahami. Itu semua adalah izin daripada Allah. Betapa ramai orang yang ingin belajar tetapi dihalang sakit. Betapa ramai pula yang mahu membaca tetapi matanya tidak mampu. Kita yang masih diberi peluang ini wajiblah bersyukur.</p>
+            
+            <p>Allah sendiri menjanjikan dalam al-Qur'an: "Jika kamu bersyukur, nescaya Aku akan tambah (nikmat) kepadamu." (Surah Ibrahim: 7)</p>
+            
+            <p>Maka setiap kali kita melafazkan syukur, Allah akan menambah nikmat. Kalau kita syukur selepas belajar, insyaAllah Allah tambahkan kefahaman, kekuatan ingatan, dan keluasan rezeki ilmu dalam hati kita.</p>
+            
+            <h2>2. Doa Selepas Belajar</h2>
+            <p>Doa selepas belajar ibarat kunci simpanan. Kita sudah membaca, sudah menulis, sudah berusaha memahami. Tetapi siapa yang menjaga supaya ilmu itu tidak hilang? Hanya Allah. Maka mintalah kepada-Nya agar ilmu itu kekal.</p>
+            
+            <blockquote>
+                <p>"Allahumma inni as'aluka fahman nabiyyin, wa hifzhal mursalin, wa ilhamal malaaikatil muqarrabin."</p>
+                <cite>(Maksudnya: Ya Allah, aku mohon kepada-Mu kefahaman para nabi, ingatan para rasul, dan ilham para malaikat yang dekat dengan-Mu.)</cite>
+            </blockquote>
+            
+            <p>Kalau doa panjang ini terasa berat, cukup dengan doa ringkas: "Ya Allah, jadikanlah ilmu ini bermanfaat untuk diriku dan juga untuk orang lain."</p>
+            
+            <h2>3. Ulang Balik Apa yang Dipelajari</h2>
+            <p>Selepas menutup buku, jangan terus biarkan minda kosong. Ambillah lima minit untuk ulang semula. Tanya diri:</p>
+            
+            <ul>
+                <li>"Hari ini aku belajar tentang apa?"</li>
+                <li>"Apakah poin-poin penting yang aku dapat?"</li>
+                <li>"Kalau aku terangkan semula kepada orang lain, bolehkah aku sebut tanpa melihat buku?"</li>
+            </ul>
+            
+            <p>Jika boleh, tandanya ilmu sudah melekat. Kalau masih kabur, ulanglah sekejap sehingga jelas. Ulama dahulu berpesan: "Ilmu tanpa ulang ibarat air tanpa ikatan,akan mengalir pergi."</p>
+            
+            <h2>4. Tidur Awal, Rehat Betul</h2>
+            <p>Otak kita ini ibarat ladang. Saat kita belajar, benih-benih ilmu ditaburkan. Tetapi benih itu tidak akan tumbuh jika tanahnya tidak berehat. Tidurlah yang menjadi waktu tanah itu memproses. Saat kita tidur, otak menyusun, mengikat, dan menyimpan apa yang sudah kita baca.</p>
+            
+            <p>Sebab itu jika kita berjaga hingga jam tiga pagi, esoknya banyak perkara hilang daripada ingatan. Nabi ﷺ sendiri tidak suka orang berjaga malam tanpa sebab. Baginda lebih suka tidur awal dan bangun awal. Cubalah amalkan: belajar malam seketika, tidur awal, bangun Subuh, lalu ulang sedikit apa yang dibaca. Ingatan waktu pagi itu sangat kuat dan segar.</p>
+            
+            <h2>5. Jaga Adab dengan Ilmu</h2>
+            <p>Selesai belajar, jangan biarkan buku berselerakan. Simpan dengan elok. Jangan campak di lantai atau dijadikan alas. Jika belajar dengan laptop atau tablet, tutuplah dengan doa, bukannya terus menukar kepada permainan atau hiburan.</p>
+            
+            <p>Adab ini mungkin kecil pada pandangan mata, tetapi di sisi Allah ia adalah tanda penghormatan kita kepada ilmu. Apabila kita hormat ilmu, insyaAllah ilmu itu akan menghormati kita kembali dengan melekat dalam jiwa.</p>
+            
+            <h2>6. Praktikkan Ilmu</h2>
+            <p>Ilmu bukan sekadar untuk menjawab soalan peperiksaan. Ilmu yang sebenar ialah ilmu yang menzahirkan amal dalam kehidupan.</p>
+            
+            <ul>
+                <li>Belajar tentang adab → amalkan bersama kawan dan keluarga.</li>
+                <li>Belajar tentang Sains → renungi kebesaran Allah di sebalik ciptaan-Nya.</li>
+                <li>Belajar tentang Matematik → latih diri menjadi jujur, teliti, dan adil dalam pengiraan.</li>
+            </ul>
+            
+            <p>Jika tidak diamalkan, ilmu itu ibarat makanan yang disimpan terlalu lama di dalam peti sejuk,akhirnya basi dan tidak lagi berguna.</p>
+            
+            <h2>Kesimpulan Bab 4</h2>
+            <p>Selepas belajar, jangan biarkan ia berakhir begitu sahaja. Ada enam perkara yang perlu dijaga: lafazkan Alhamdulillah, berdoa agar ilmu disimpan, ulang kembali apa yang dipelajari, tidur awal agar otak segar, jaga adab dengan ilmu, dan amalkan apa yang dipelajari.</p>
+            
+            <p>Ingatlah, belajar tidak habis ketika buku ditutup. Sebenarnya, saat buku ditutup itulah ilmu mula hidup, apabila ia dibawa masuk ke dalam kehidupan seharian kita.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 5 -->
+    <div class="page chapter-page" id="chapter5">
+        <div class="page-header">
+            <span class="chapter-number">Bab 5</span>
+            <h1 class="chapter-title">Amalan Tambahan untuk Kuat Ingatan</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Kalau kita tanya pelajar, masalah paling besar dalam belajar bukanlah malas semata-mata, tetapi lupa. Baru semalam tekun membaca, esoknya sudah kabur. Sudah bersusah-payah menghafal panjang-panjang, masuk dewan peperiksaan tiba-tiba semuanya hilang dari ingatan.</p>
+            
+            <p>Namun, ulama silam telah meninggalkan kita jejak amalan. Mereka bukan sahaja belajar dengan tekun, bahkan mereka menjaga hati, lidah, dan gaya hidup agar akal sentiasa tajam. Rahsia mereka bukan sihir, bukan magik, tetapi gabungan doa, adab, dan disiplin hidup yang sihat serta penuh berkat.</p>
+            
+            <h2>1. Jaga Makanan</h2>
+            <p>Imam al-Syafi'i pernah berpesan: "Ilmu itu cahaya, dan cahaya Allah tidak akan masuk ke dalam hati yang kotor." Antara kekotoran hati datang daripada makanan haram. Bila makanan kita bercampur dengan yang tidak halal, atau rezeki itu datang daripada sumber yang kelam, maka hati jadi berat, akal jadi malas, dan ingatan pun kabur.</p>
+            
+            <p>Maka, jagalah makanan kita:</p>
+            
+            <ul>
+                <li>Pilihlah yang halal, kerana halal itu keberkatan.</li>
+                <li>Jangan makan terlalu kenyang, kerana kenyang menjadikan otak malas.</li>
+                <li>Biasakan makanan yang menajamkan fikiran: kismis, madu, susu, kurma, air kosong yang jernih.</li>
+            </ul>
+            
+            <p>Orang-orang tua dahulu percaya kismis hitam mampu menguatkan ingatan. Betul atau tidak, wallahu a'lam. Tetapi yang pasti, setiap makanan sunnah itu ada barakahnya, dan barakah itu lebih besar nilainya daripada sekadar vitamin pada jasad.</p>
+            
+            <h2>2. Perbanyakkan Zikir</h2>
+            <p>Otak kita ibarat pintu. Jika pintu itu penuh debu dosa, ilmu susah masuk. Zikir adalah kain lap yang membersihkan debu itu.</p>
+            
+            <ul>
+                <li>Sebelum belajar, ucapkan: "Ya Fattah, Ya 'Alim" (Wahai Yang Maha Membuka, Wahai Yang Maha Mengetahui).</li>
+                <li>Saat hati sempit, ulangkan Astaghfirullah.</li>
+                <li>Saat penat, basahkan lidah dengan Subhanallah, Alhamdulillah, Allahu Akbar.</li>
+            </ul>
+            
+            <p>Lidah yang sentiasa berzikir menjadikan hati ringan, dan hati yang ringan itu memudahkan otak fokus. Ulama dahulu hidup dengan zikir, sebab itu kata-kata mereka berkat, dan tulisan mereka kekal sepanjang zaman.</p>
+            
+            <h2>3. Jauhi Dosa</h2>
+            <p>Ini kunci yang paling besar. Ingatan itu cahaya, dan cahaya Allah tidak akan hadir kepada hati yang bergelumang maksiat. Imam Syafie sendiri pernah mengadu kepada gurunya, Imam Waki', tentang susahnya menghafal. Gurunya lalu berpesan: "Ilmu itu cahaya, dan cahaya Allah tidak diberikan kepada ahli maksiat."</p>
+            
+            <p>Kalau mata kita liar memandang yang haram, telinga leka mendengar yang sia-sia, lidah ringan mengumpat dan mencaci,maka jangan pelik kalau hafalan kita bocor. Ilmu tidak mahu singgah di hati yang gelap. Maka jagalah pandangan, jagalah telinga, jagalah lidah, nescaya ingatan jadi lebih tajam.</p>
+            
+            <h2>4. Bersedekah</h2>
+            <p>Inilah rahsia yang ramai terlepas pandang. Sedekah bukan sekadar membuka pintu rezeki harta, tetapi juga membuka pintu rezeki ilmu. Bila kita bersedekah, doa orang lain naik ke langit, dan doa itu menjadi sebab hati kita lapang.</p>
+            
+            <p>Ulama dahulu tidak pernah putus memberi,walau sekadar sebiji kurma, walau sekadar senyuman, walau sekadar ilmu kecil yang dikongsi. Setiap sedekah itu ibarat air yang menyuburkan ladang ingatan.</p>
+            
+            <h2>5. Doa Ibu Bapa</h2>
+            <p>Jangan lupa bahawa doa ibu bapa adalah senjata yang paling mustajab. Betapa ramai pelajar berjaya bukan kerana mereka luar biasa pintar, tetapi kerana setiap hari ada doa yang mengiringi daripada mulut seorang ibu, atau air mata seorang ayah.</p>
+            
+            <p>Kalau mahu menghadapi peperiksaan, mahu menghafal, mahu menuntut ilmu,datanglah kepada ibu bapa. Cium tangan mereka, mohon restu mereka. Itu adalah kunci kejayaan yang paling besar, yang tidak dapat dibeli dengan apa-apa sekalipun.</p>
+            
+            <h2>6. Bangun Pagi & Tahajjud</h2>
+            <p>Waktu pagi, terutama selepas Subuh, adalah masa otak paling segar. Cuba ulang hafalan ketika itu, insyaAllah ia lebih melekat.</p>
+            
+            <p>Dan jika mampu, bangunlah pada sepertiga malam untuk tahajjud. Saat itu dunia sunyi, pintu langit terbuka, dan doa lebih mustajab. Ramai ulama yang menulis kitab di tengah malam, kerana suasana hening memberi kekuatan luar biasa. Ilmu yang dituntut selepas tahajjud itu berbeza rasanya,lebih lembut, lebih melekat, lebih bercahaya.</p>
+            
+            <h2>Kesimpulan Bab 5</h2>
+            <p>Menguatkan ingatan bukan sekadar membaca berkali-kali. Ada rahsia rohani yang Islam ajarkan: jaga makanan supaya hati bersih, banyakkan zikir supaya jiwa ringan, jauhi dosa supaya cahaya ilmu mudah singgah, rajin bersedekah supaya hati lapang, minta doa ibu bapa supaya jalan dipermudah, dan bangun pagi serta tahajjud supaya fikiran tajam.</p>
+            
+            <p>Apabila semua ini digabungkan, insyaAllah bukan sahaja ingatan jadi kuat, bahkan ilmu itu sendiri akan menjadi berkat,terbawa ke dalam amal, dan membimbing kita menuju reda Allah.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 6 -->
+    <div class="page chapter-page" id="chapter6">
+        <div class="page-header">
+            <span class="chapter-number">Bab 6</span>
+            <h1 class="chapter-title">Belajar Gaya Islam dalam Zaman Moden</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Zaman dahulu, para ulama menuntut ilmu dengan penuh kesusahan dan ketekunan. Ada yang belajar bertemankan cahaya lilin yang redup, ada yang berjalan kaki beratus bahkan beribu kilometer hanya untuk bertemu seorang guru, ada yang menulis nota dengan bulu ayam di atas kulit atau pelepah tamar.</p>
+            
+            <p>Kita hari ini lain sekali keadaannya. iPad, YouTube, Google, bahkan kecerdasan buatan (AI) semuanya terbentang di hujung jari. Ilmu seakan mudah, seakan deras mengalir. Namun, jangan tertipu. Cabarannya bukan lagi pada kesukaran mencari ilmu, tetapi pada terlalu banyaknya gangguan yang melalaikan.</p>
+            
+            <h2>1. Telefon: Sahabat atau Syaitan di Poket?</h2>
+            <p>Telefon ini umpama pedang dua mata. Dalam genggamanmu, ia boleh jadi kawan setia, juga boleh menjelma musuh paling halus.</p>
+            
+            <p>Ia menjadi sahabat, bila kita menatapnya untuk mendengar syarahan ilmiah, membuka aplikasi al-Quran, menulis nota digital, atau menyertai kelas dalam talian. Namun, ia boleh jadi syaitan poket bila kita kononnya mahu menonton satu video di TikTok, lalu sejam berlalu tanpa kita sedar, iman pun pudar, hati pun semakin lalai.</p>
+            
+            <p>Islam mengajar kita jalan pertengahan. Kawal, jangan dibuang terus. Caranya mudah tapi perlu disiplin:</p>
+            
+            <ul>
+                <li>Letakkan had masa (screen time).</li>
+                <li>Gunakan aplikasi produktiviti.</li>
+                <li>Jauhkan telefon ketika belajar.</li>
+            </ul>
+            
+            <p>Dengan itu, telefon kembali menjadi khadam, bukan tuan.</p>
+            
+            <h2>2. Media Sosial: Pisau Bermata Dua</h2>
+            <p>Media sosial adalah lapangan luas. Di satu sisi, ia memancarkan cahaya ilmu,ustaz, guru, pakar berkongsi mutiara hikmah. Di sisi lain, ia menjadi gelanggang gosip, fitnah, dan buang masa.</p>
+            
+            <p>Tip belajar gaya Islam:</p>
+            
+            <ul>
+                <li>Ikuti akaun yang menambah iman dan ilmu.</li>
+                <li>Tinggalkan yang melalaikan hati.</li>
+                <li>Gunakan ia sebagai nota mini,catat poin ringkas ilmu, lalu kongsikan. Kerana bila ilmu dikongsi, ia makin berakar dalam jiwa.</li>
+            </ul>
+            
+            <h2>3. Teknologi Sebagai Alat, Bukan Tuan</h2>
+            <p>Betapa sering kita menjadi hamba teknologi. Bila bateri telefon habis, jiwa kita kalut seolah-olah dunia runtuh. Padahal ulama dahulu, tanpa internet, tanpa komputer, masih lahir sebagai genius zaman.</p>
+            
+            <p>Islam mengajar kita menimbang dengan seimbang:</p>
+            
+            <ul>
+                <li>YouTube untuk menonton penjelasan.</li>
+                <li>Google untuk menyemak fakta.</li>
+                <li>AI untuk meminta penerangan ringkas.</li>
+            </ul>
+            
+            <p>Namun jangan sampai otak dimanjakan hingga malas berfikir. Teknologi hanya alat bantu, bukan tempat kita menyerah bulat-bulat.</p>
+            
+            <h2>4. Kawan & Circle</h2>
+            <p>Dalam dunia moden, teman kita bukan sahaja duduk di sebelah, tetapi juga dalam genggaman,WhatsApp group, Discord, Telegram.</p>
+            
+            <p>Jika teman-teman di ruang maya asyik berbicara tentang drama, game, dan gosip, kita pun hanyut. Tetapi jika mereka berkongsi nota, doa, dan tips belajar, kita pun terdorong menjadi rajin.</p>
+            
+            <blockquote>
+                <p>"Seseorang itu atas agama (gaya hidup) kawannya. Maka lihatlah dengan siapa kamu berkawan."</p>
+                <cite>, Rasulullah SAW</cite>
+            </blockquote>
+            
+            <p>Circle yang baik → hidup pun baik. Circle yang lalai → kita pun ikut lalai.</p>
+            
+            <h2>5. Aplikasi Islami</h2>
+            <p>Teknologi boleh jadi jambatan menuju akhirat. Banyak aplikasi Islam hadir untuk memudahkan perjalanan belajar:</p>
+            
+            <ul>
+                <li>Aplikasi al-Quran untuk tilawah dan tadabbur.</li>
+                <li>Aplikasi doa untuk membasahkan lidah dengan zikrullah.</li>
+                <li>Aplikasi jadual yang berpandukan solat.</li>
+            </ul>
+            
+            <p>Apabila kita menyulam teknologi dengan ruh Islam, barulah ilmu yang dicari seimbang dunia dan akhirat.</p>
+            
+            <h2>6. Kawal Waktu Hiburan</h2>
+            <p>Islam tidak melarang hiburan. Nabi SAW bergurau, para sahabat ada waktu rehat. Tetapi garisnya jelas: jangan berlebihan.</p>
+            
+            <p>Main game, menonton filem, atau menatal media sosial boleh jadi rehat. Tetapi jangan biarkan ia menjadi seluruh hidup. Ulama berpesan: "Apa yang berlebihan, itu penyakit."</p>
+            
+            <h2>Kesimpulan Bab 6</h2>
+            <p>Zaman moden ini bukan susahnya mencari ilmu, tetapi sukarnya menepis gangguan.</p>
+            
+            <p>Belajar gaya Islam dalam dunia digital bererti:</p>
+            
+            <ul>
+                <li>Kawal telefon, jangan biar telefon mengawal kita.</li>
+                <li>Gunakan teknologi sebagai alat, bukan tuan.</li>
+                <li>Pilih circle yang baik.</li>
+                <li>Imbangi hiburan dengan ibadah.</li>
+            </ul>
+            
+            <p>Jika semua ini dapat diseimbangkan, insyaAllah setiap usaha belajar tetap bernilai ibadah,walaupun kita hidup dalam dunia yang serba moden.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 7 -->
+    <div class="page chapter-page" id="chapter7">
+        <div class="page-header">
+            <span class="chapter-number">Bab 7</span>
+            <h1 class="chapter-title">Kisah Inspirasi: Dari Ulama ke Pelajar Zaman Kini</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Kadang-kadang kita merasa belajar ini sungguh berat. Buku tebal, tugasan menimbun, peperiksaan pula semakin hampir. Hati gelisah, akal penat, semangat pun menurun. Tetapi, bila kita singkap kembali lembaran kisah orang terdahulu – para ulama, cendekiawan, dan juga pelajar zaman moden – kita akan sedar sesuatu: kalau mereka mampu menanggung beban dan berjaya, maka kita juga mampu. Bezanya cuma pada kemahuan, kesungguhan, dan sandaran kita kepada Allah.</p>
+            
+            <h2>1. Imam Syafie: Ingatan Luar Biasa</h2>
+            <p>Imam Syafie rahimahullah sejak kecil sudah menampakkan keistimewaan. Pada usia tujuh tahun, beliau sudah menghafal seluruh al-Quran. Umur sepuluh tahun pula, beliau hafal Kitab al-Muwatta' karya gurunya Imam Malik.</p>
+            
+            <p>Ada kisah menakjubkan: Imam Syafie pernah menutup kitab dengan tangannya, kerana sekali baca sahaja, ilmunya sudah terlekat di dalam dada. Ingatan beliau begitu tajam, kerana hatinya bersih – menjaga diri daripada dosa, menjaga pandangan, menjaga telinga.</p>
+            
+            <p>Rahsianya ada pada tiga perkara:</p>
+            
+            <ul>
+                <li>Hati yang suci daripada maksiat.</li>
+                <li>Kerajinan mengulang pelajaran.</li>
+                <li>Guru yang berkat ilmunya.</li>
+            </ul>
+            
+            <p>Pesanannya jelas: kalau kita mahu kuat ingatan, kurangkan dosa. Ingatan itu cahaya, sedangkan dosa itu kegelapan.</p>
+            
+            <h2>2. Imam Ahmad: Kesungguhan Mencari Ilmu</h2>
+            <p>Imam Ahmad bin Hanbal terkenal sebagai lautan kesabaran dan kegigihan. Beliau merantau jauh hanya untuk mendapatkan satu hadis. Kadangkala berhari-hari perjalanan ditempuh, hanya semata-mata mahu memastikan kesahihan sebuah riwayat.</p>
+            
+            <p>Ilmunya bukan dicari kerana peperiksaan, tetapi kerana cintanya kepada kebenaran. Akhirnya, beliau muncul sebagai pengasas sebuah mazhab agung, diikuti jutaan umat hingga kini.</p>
+            
+            <p>Pesanannya kepada kita: jika belajar hanya kerana takut gagal peperiksaan, kita mudah penat. Tetapi kalau belajar kerana mencari redha Allah dan mahu memberi manfaat kepada manusia, kita akan merasai kemanisannya walaupun penuh kepayahan.</p>
+            
+            <h2>3. Ibnu Sina: Genius Muda</h2>
+            <p>Ibnu Sina, yang digelar Sheikh al-Ra'is, adalah genius yang luar biasa. Pada usia 18 tahun, beliau sudah bergelar tabib. Karyanya, al-Qanun fi al-Tibb, menjadi rujukan universiti di Eropah selama berabad-abad.</p>
+            
+            <p>Rahsia beliau? Suka belajar pada waktu malam, bertemankan lampu minyak. Bila akalnya buntu, beliau tidak merungut. Beliau bangun mendirikan solat, memohon petunjuk daripada Allah. Itulah resepi sebenar kejeniusannya.</p>
+            
+            <p>Pesanan untuk kita: bila terasa buntu, jangan hanya stress. Bangunlah, ambil wuduk, solat dua rakaat, mohon kepada Allah. Ingatlah, ilmu itu milik Allah, dan Dia berhak memberi kepada siapa yang Dia kehendaki.</p>
+            
+            <h2>4. Kisah Pelajar Kampung Jadi Doktor</h2>
+            <p>Ada kisah nyata dari tanah air kita. Seorang pelajar kampung yang serba kekurangan – rumahnya tiada elektrik, belajarnya hanya bertemankan cahaya pelita. Dia mengulang kaji di bawah pokok, menulis nota di kertas terpakai. Namun berkat usaha dan doa, akhirnya Allah angkat darjatnya menjadi seorang doktor.</p>
+            
+            <p>Pesanannya jelas: jangan jadikan kekurangan sebagai alasan. Ilmu itu bukan soal kemewahan, tetapi soal usaha dan kesungguhan.</p>
+            
+            <h2>5. Pelajar Universiti Moden: Cabaran Telefon</h2>
+            <p>Kisah ini pula lebih dekat dengan kita. Ada seorang pelajar universiti moden yang selalu gagal. Puncanya? Telefon. Game, drama, dan media sosial mengikat dirinya.</p>
+            
+            <p>Namun, satu hari, dia membuat keputusan untuk berubah. Dia letakkan telefon jauh ketika belajar. Dia mula menyusun jadual belajar ikut waktu solat. Dia berdoa sebelum mengulang kaji. Hanya dalam satu semester, pointer-nya naik mendadak.</p>
+            
+            <p>Pesanannya: masalahnya bukan pada telefon, bukan pada zaman moden. Masalah sebenar ialah disiplin. Bila disiplin berubah, hasil pun turut berubah.</p>
+            
+            <h2>6. Pengajaran Dari Kisah</h2>
+            <p>Daripada semua kisah ini, kita belajar:</p>
+            
+            <ul>
+                <li>Imam Syafie → hafalan kuat kerana menjaga dosa.</li>
+                <li>Imam Ahmad → rela susah demi ilmu.</li>
+                <li>Ibnu Sina → genius tetapi tetap bergantung kepada Allah.</li>
+                <li>Pelajar kampung → serba kekurangan tetapi berjaya.</li>
+                <li>Pelajar moden → cabaran teknologi, tetapi boleh berubah dengan disiplin.</li>
+            </ul>
+            
+            <p>Mereka berbeza zaman, berbeza keadaan, tetapi sama dalam satu hal: ilmu, usaha, dan doa.</p>
+            
+            <h2>Kesimpulan Bab 7</h2>
+            <p>Kisah orang terdahulu dan sekarang bukan sekadar cerita untuk dibaca, tetapi cermin untuk kita menilai diri. Kalau mereka mampu, kita juga mampu. Bezanya hanya pada kesungguhan kita: mahu atau tidak mahu?</p>
+        </div>
+    </div>
+
+    <!-- Chapter 8 -->
+    <div class="page chapter-page" id="chapter8">
+        <div class="page-header">
+            <span class="chapter-number">Bab 8</span>
+            <h1 class="chapter-title">Strategi Praktikal Belajar Gaya Islam</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Ilmu tanpa amal ibarat pohon yang tidak berbuah. Cantik daunnya, tetapi tiada hasil yang boleh dinikmati. Begitulah juga belajar: kalau hanya membaca dan mendengar tanpa ada amalan, ilmu itu akan kering di kertas, tidak hidup dalam jiwa. Sebab itu, selepas kita memahami konsep, doa, dan mengambil inspirasi daripada kisah-kisah ulama serta pelajar terdahulu, tibalah masanya kita masuk kepada perkara paling penting: strategi praktikal. Langkah demi langkah, yang boleh terus dipraktikkan oleh seorang pelajar Muslim, agar belajarnya bukan sekadar akademik, tetapi ibadah.</p>
+            
+            <h2>1. Sebelum Belajar</h2>
+            <p>Segala yang besar dalam hidup bermula dengan persiapan. Seperti orang mahu solat, dia ambil wudhu' dahulu; seperti petani mahu menanam, dia siapkan tanahnya dahulu. Begitu juga belajar – hati dan diri perlu disediakan.</p>
+            
+            <h3>✔ Ambil Wudhu'</h3>
+            <p>Air wudhu' menyegarkan badan, menenangkan jiwa, dan membuka pintu hati. Wudhu' bukanlah syarat sah untuk belajar, tetapi ia menjadikan suasana belajar penuh nur.</p>
+            
+            <h3>✔ Doa Sebelum Belajar</h3>
+            <p>Doa yang ringkas tetapi besar maknanya: "Ya Allah, lapangkan dadaku, mudahkan urusanku, terangilah hatiku dengan cahaya ilmu." Doa ini mengingatkan kita bahawa ilmu bukan hasil kepintaran semata, tetapi anugerah dari Allah.</p>
+            
+            <h3>✔ Niatkan Belajar kerana Allah</h3>
+            <p>Niat menentukan hasil. Jika belajar semata-mata kerana pointer, maka itulah yang kita dapat. Tetapi jika belajar kerana Allah, kita akan memperoleh ilmu, pointer, pahala, dan redha Allah.</p>
+            
+            <h3>✔ Sediakan Tempat Belajar</h3>
+            <p>Meja yang kemas, cahaya lampu yang cukup, jauh dari gangguan. Islam mengajar kita bahawa kebersihan sebahagian daripada iman. Bila meja bersih, hati lebih tenang.</p>
+            
+            <h2>2. Semasa Belajar</h2>
+            <p>Inilah waktu perjuangan sebenar. Waktu duduk di hadapan buku atau skrin, akal diuji, hati diganggu. Maka perlukan panduan supaya belajar lebih berkesan.</p>
+            
+            <h3>✔ Baca Bismillah</h3>
+            <p>Setiap kali membuka bab baru, mulakan dengan nama Allah. Ia tanda tawakkal dan keberkatan.</p>
+            
+            <h3>✔ Baca Sedikit Al-Quran</h3>
+            <p>Hanya dua atau tiga ayat sebelum belajar, cukup untuk memberi ruh kepada ilmu. Ayat-ayat Allah menenangkan hati dan membersihkan fikiran.</p>
+            
+            <h3>✔ Fokus 25–50 minit, Rehat 5–10 minit</h3>
+            <p>Kaedah ini bukan sekadar strategi moden, bahkan selari dengan sunnah. Nabi SAW tidak suka umatnya memberatkan diri tanpa rehat.</p>
+            
+            <h3>✔ Tulis Nota dengan Tangan</h3>
+            <p>Walaupun ada laptop, tulisan tangan lebih berkesan melekat dalam ingatan. Pena yang bergerak membantu otak bekerja.</p>
+            
+            <h3>✔ Ulang Sebut (Verbalize)</h3>
+            <p>Ucapkan dengan suara perlahan poin-poin penting. Bila lidah mengulang, telinga mendengar, otak lebih mudah menyimpan.</p>
+            
+            <h3>✔ Selitkan Zikir Ringkas</h3>
+            <p>Antara sela belajar, ucapkan "Subhanallah", "Alhamdulillah", "Allahu Akbar". Ia membersihkan hati daripada lalai.</p>
+            
+            <h2>3. Selepas Belajar</h2>
+            <p>Jangan terus bangun dan pergi. Selepas belajar adalah waktu mengikat ilmu, supaya tidak hilang begitu sahaja.</p>
+            
+            <h3>✔ Baca Doa Selepas Belajar</h3>
+            <p>"Ya Allah, kurniakan aku manfaat daripada ilmu ini, dan jauhkan aku dari ilmu yang tidak bermanfaat."</p>
+            
+            <h3>✔ Ulang Kajian Ringkas</h3>
+            <p>Sebelum tidur, buat rumusan kecil. Islam mengajar kita muhasabah diri sebelum tidur – maka muhasabah ilmu juga sebahagian daripadanya.</p>
+            
+            <h3>✔ Tidur Awal & Bangun Subuh</h3>
+            <p>Tidur yang cukup menyihatkan otak, bangun Subuh menyihatkan hati. Waktu selepas Subuh adalah masa emas untuk mengulang kaji.</p>
+            
+            <h2>4. Waktu Emas untuk Belajar</h2>
+            <p>Allah jadikan waktu-waktu tertentu dengan kelebihan khusus.</p>
+            
+            <ul>
+                <li>🔹 Selepas Subuh – otak masih segar, doa malaikat mengiringi.</li>
+                <li>🔹 Selepas Asar – waktu sesuai untuk menghafal.</li>
+                <li>🔹 Selepas Isyak (awal malam) – suasana sunyi, hati tenang.</li>
+            </ul>
+            
+            <p>Tetapi jangan melampau berjaga hingga lewat malam hingga merosakkan Subuh, kerana ilmu tanpa barakah Subuh hanyalah kosong.</p>
+            
+            <h2>5. Checklist Harian Pelajar Muslim</h2>
+            
+            <ul>
+                <li>☑ Solat lima waktu tepat pada waktunya.</li>
+                <li>☑ Baca doa sebelum dan selepas belajar.</li>
+                <li>☑ Buat ulang kaji ringkas setiap hari.</li>
+                <li>☑ Jaga hubungan dengan ibu bapa – doa mereka kunci keberkatan.</li>
+                <li>☑ Kawal hiburan (game, media sosial) – jangan lebih satu jam sehari.</li>
+                <li>☑ Tidur awal, bangun Subuh dengan segar.</li>
+            </ul>
+            
+            <p>Checklist ini nampak kecil, tetapi bila dilakukan konsisten, ia akan membentuk peribadi seorang pelajar Muslim yang seimbang antara dunia dan akhirat.</p>
+            
+            <h2>6. Strategi Exam Mode</h2>
+            <p>Hari peperiksaan adalah hari ujian bukan sahaja untuk akal, tetapi juga untuk hati.</p>
+            
+            <h3>✔ Malam sebelum exam</h3>
+            <p>Tidur cukup, jangan paksa diri belajar sampai Subuh. Otak yang penat tidak dapat memberi jawapan.</p>
+            
+            <h3>✔ Hari exam</h3>
+            <p>Tunaikan solat dhuha, baca doa Nabi Musa: "Rabbi shrah li sadri, wa yassir li amri, wahlul 'uqdatan min lisani, yafqahu qawli."</p>
+            
+            <h3>✔ Dalam dewan exam</h3>
+            <p>Mulakan dengan Bismillah, jawab dengan tenang.</p>
+            
+            <h3>✔ Selepas exam</h3>
+            <p>Jangan lupa sujud syukur. Lulus atau gagal, semuanya ujian daripada Allah.</p>
+            
+            <h2>Kesimpulan Bab 8</h2>
+            <p>Belajar gaya Islam bukan hanya sekadar doa atau zikir, tetapi gabungan usaha, disiplin, dan spiritual. Bila semua ini digabungkan, belajar akan menjadi ibadah, ilmu akan berkat, dan hati akan tenang.</p>
+            
+            <p>Belajar yang bermula dengan wudhu', diiringi doa, dihiasi zikir, disertai disiplin, dan ditutup dengan syukur – itulah belajar yang bernilai di sisi Allah.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 9 -->
+    <div class="page chapter-page" id="chapter9">
+        <div class="page-header">
+            <span class="chapter-number">Bab 9</span>
+            <h1 class="chapter-title">Penutup & Wasiat Ilmu</h1>
+        </div>
+        <div class="chapter-content">
+            <p class="drop-cap">Alhamdulillāh, setinggi-tinggi kesyukuran kita panjatkan ke hadrat Allah SWT kerana dengan limpah rahmat-Nya kita dapat menamatkan perjalanan buku ini. Dari helaian pertama hingga ke helaian terakhir, kita telah bersama-sama menghayati suatu kembara ilmu yang bukan sahaja berbicara tentang cara belajar, tetapi juga cara hidup sebagai seorang Muslim yang menuntut ilmu.</p>
+            
+            <p>Kita sudah menyingkap tentang niat yang tulus sebelum belajar, amalan yang mengiringi ketika belajar, doa dan zikir yang membajai jiwa, disiplin yang menguatkan langkah, cabaran zaman moden yang menguji keteguhan, kisah ulama dan pelajar yang menjadi teladan, hingga kepada strategi praktikal yang boleh dipraktikkan dalam kehidupan seharian. Semua itu bukan sekadar catatan teori di atas kertas, tetapi ia adalah panduan hidup – jalan seorang penuntut ilmu yang ingin mengikat dunia dan akhirat dalam satu ikatan keberkatan.</p>
+            
+            <h2>1. Belajar Itu Ibadah</h2>
+            <p>Dalam kaca mata Islam, belajar tidak pernah menjadi sekadar keperluan peperiksaan atau syarat pekerjaan. Ia adalah ibadah, satu jalan menuju Allah. Rasulullah SAW pernah bersabda: "Barangsiapa menempuh jalan untuk mencari ilmu, maka Allah akan mudahkan baginya jalan menuju syurga."</p>
+            
+            <p>Maka, setiap kali kita membuka buku, setiap kali kita menulis nota, setiap kali kita mengulang kaji – sebenarnya kita sedang mengetuk pintu-pintu syurga. Ilmu bukan sekadar di kepala, ia adalah cahaya di hati.</p>
+            
+            <h2>2. Jangan Hanya Kejar Dunia</h2>
+            <p>Ilmu yang terpisah daripada iman adalah bagaikan api yang membakar. Ia memberi kuasa, tetapi tidak memberi ketenangan. Ia mengangkat darjat manusia, tetapi boleh juga menjatuhkannya ke lembah kesombongan. Tetapi ilmu yang bersatu dengan iman ibarat pelita – ia bukan sahaja menerangi diri, bahkan memberi manfaat kepada orang lain.</p>
+            
+            <p>Ramai orang bijak, namun kosong jiwanya. Ramai yang berilmu, tetapi ilmunya tidak membawa dekat dengan Allah. Jangan kita tergolong dalam golongan itu. Belajarlah bukan semata-mata untuk pointer, bukan sekadar untuk pekerjaan, tetapi belajar kerana kita mahu menjadi hamba Allah yang lebih bermanfaat untuk keluarga, masyarakat, dan agama.</p>
+            
+            <h2>3. Tiga Perkara Jangan Pernah Lupa</h2>
+            <p>Ada tiga kunci keberkatan ilmu yang mesti sentiasa dijaga:</p>
+            
+            <p><strong>Doa ibu bapa.</strong> Redha mereka adalah jambatan menuju redha Allah. Jangan pernah jemu meminta doa daripada mereka.</p>
+            
+            <p><strong>Guru.</strong> Hormatilah guru, kerana ilmu yang diberi tidak akan berkat tanpa adab kepada pemberinya.</p>
+            
+            <p><strong>Amal.</strong> Ilmu tanpa amal bagaikan lampu yang tidak menyala – ada mentol, ada wayar, tetapi tiada cahaya.</p>
+            
+            <h2>4. Pesanan Praktikal Terakhir</h2>
+            <p>Hidup seorang penuntut ilmu tidak selamanya mudah. Ada masa penat, ada masa gagal, ada masa berjaya. Maka ingatlah tiga perkara ini:</p>
+            
+            <ul>
+                <li>Jika penat, jangan berhenti selama-lamanya. Berhentilah seketika, tarik nafas, kemudian sambung semula.</li>
+                <li>Jika gagal, jangan patah semangat. Anggaplah kegagalan itu sebagai guru yang paling jujur.</li>
+                <li>Jika berjaya, jangan hanyut dengan rasa bangga. Bersyukurlah, kerana setiap kejayaan hanyalah pinjaman daripada Allah.</li>
+            </ul>
+            
+            <h2>5. Wasiat Akhir</h2>
+            <p>Wahai anak muda, wahai penuntut ilmu sekalian, jangan lupa – dunia ini hanyalah persinggahan, bukan destinasi. Ilmu yang kita himpun adalah bekalan untuk perjalanan yang lebih panjang, perjalanan menuju akhirat.</p>
+            
+            <p>Jagalah hati dengan niat yang ikhlas, basahkan lidah dengan zikir, tundukkan mata daripada maksiat, teguhkan tubuh dengan solat. Apabila semua ini dijaga, insyaAllah ilmu yang kita pelajari akan menjadi cahaya yang menyinari bukan sahaja dunia, tetapi juga kubur, alam barzakh, hingga ke hari akhirat.</p>
+            
+            <h2>Doa Penutup</h2>
+            
+            <blockquote>
+                <p>اللَّهُمَّ بَارِكْ لَنَا فِي عِلْمِنَا، وَاجْعَلْهُ نُورًا فِي قُلُوبِنَا، وَهُدًى فِي طَرِيقِنَا، وَزَادًا فِي آخِرَتِنَا. وَلَا تَجْعَلْ عِلْمَنَا عِلْمًا غَيْرَ نَافِعٍ، وَلَكِنِ اجْعَلْهُ عِلْمًا يُقَرِّبُنَا مِنْكَ، وَيَزِيدُنَا خُشُوعًا لَكَ، وَيَرْفَعُ دَرَجَاتِنَا عِنْدَكَ.</p>
+                <cite>"Ya Allah, berkatilah ilmu kami, jadikan ia cahaya di hati kami, penunjuk di jalan kami, dan bekalan di akhirat kami. Jangan Engkau jadikan ilmu kami ilmu yang tidak bermanfaat, tetapi ilmu yang membawa kami semakin dekat dengan-Mu. Amin Ya Rabbal 'Alamin."</cite>
+            </blockquote>
+            
+            <p style="text-align: center; font-style: italic; margin-top: 2rem;">Tamat.</p>
+        </div>
+    </div>
+
+    <!-- Print Controls (hidden by default) -->
+    <div class="print-controls">
+        <button onclick="window.print()" class="print-btn">Print / Export PDF</button>
+    </div>
+</body>
+</html>
