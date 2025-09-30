@@ -65,12 +65,12 @@
 </head>
 <body>
     <!-- Password Protection Modal -->
-    <div id="passwordModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; display: flex; justify-content: center; align-items: center;">
-        <div style="background: white; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.5); border: 3px solid #333;">
-            <h2 style="margin: 0 0 25px 0; font-size: 24px; color: #333; font-weight: bold;">🔐 ENTER PASSWORD</h2>
-            <input type="password" id="passwordInput" placeholder="Type password here..." style="width: 250px; padding: 15px; border: 3px solid #333; border-radius: 8px; font-size: 18px; text-align: center; margin-bottom: 20px;" onkeypress="handleKeyPress(event)">
+    <div id="passwordModal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
+        <div style="background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.5); border: 3px solid #333; max-width: 400px; width: 100%; max-height: 90vh; overflow-y: auto;">
+            <h2 style="margin: 0 0 20px 0; font-size: 20px; color: #333; font-weight: bold;">🔐 ENTER PASSWORD</h2>
+            <input type="password" id="passwordInput" placeholder="Type password here..." style="width: 100%; max-width: 300px; padding: 12px; border: 3px solid #333; border-radius: 8px; font-size: 16px; text-align: center; margin-bottom: 20px; box-sizing: border-box;" onkeypress="handleKeyPress(event)">
             <br>
-            <button onclick="checkPassword()" style="background: #333; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold;">SUBMIT</button>
+            <button onclick="checkPassword()" style="background: #333; color: white; padding: 12px 25px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; max-width: 200px;">SUBMIT</button>
         </div>
     </div>
 
