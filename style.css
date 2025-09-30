@@ -607,76 +607,59 @@ blockquote cite {
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-/* Music Volume Controls */
-.music-controls {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
+
+/* Audio Player Styles */
+.audio-player {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
 }
 
-.volume-control {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 10px 15px;
-    border-radius: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(102, 126, 234, 0.2);
-}
-
-.volume-icon {
-    font-size: 16px;
-    color: #667eea;
-}
-
-.volume-slider {
-    width: 120px;
-    height: 6px;
-    border-radius: 3px;
-    background: #e1e5e9;
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
-    cursor: pointer;
-}
-
-.volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
-    transition: all 0.3s ease;
-}
-
-.volume-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-.volume-slider::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
-}
-
-.volume-value {
+.audio-player h3 {
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 1.3rem;
     font-weight: 600;
     color: #667eea;
-    min-width: 35px;
-    text-align: center;
+    margin: 0 0 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.chapter-audio {
+    width: 100%;
+    max-width: 400px;
+    height: 50px;
+    border-radius: 25px;
+    outline: none;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    display: block;
+}
+
+.chapter-audio::-webkit-media-controls-panel {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 25px;
+}
+
+.chapter-audio::-webkit-media-controls-play-button,
+.chapter-audio::-webkit-media-controls-pause-button {
+    background: white;
+    border-radius: 50%;
+    color: #667eea;
+}
+
+.audio-note {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 10px 0 0 0;
+    font-style: italic;
 }
 
 /* Print Controls */
