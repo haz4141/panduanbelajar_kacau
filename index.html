@@ -11,7 +11,7 @@
     <iframe 
         id="backgroundMusic" 
         src="https://www.youtube.com/embed/tJbDzPo9wWE?autoplay=1&loop=1&playlist=tJbDzPo9wWE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&fs=0&mute=0&enablejsapi=1"
-        style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0.5; pointer-events: none; border: none;"
+        style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0.1; pointer-events: none; border: none;"
         allow="autoplay; encrypted-media"
         allowfullscreen>
     </iframe>
@@ -146,11 +146,28 @@
                             otherAudio.pause();
                         }
                     });
+                    // Lower background music volume when audio plays
+                    lowerBackgroundMusicVolume();
                 });
                 
                 // Handle mobile audio pause
                 audio.addEventListener('pause', function() {
                     console.log('Audio paused');
+                    // Check if any other audio is playing
+                    const anyAudioPlaying = Array.from(audioElements).some(a => !a.paused);
+                    if (!anyAudioPlaying) {
+                        restoreBackgroundMusicVolume();
+                    }
+                });
+                
+                // Handle audio ended
+                audio.addEventListener('ended', function() {
+                    console.log('Audio ended');
+                    // Check if any other audio is playing
+                    const anyAudioPlaying = Array.from(audioElements).some(a => !a.paused);
+                    if (!anyAudioPlaying) {
+                        restoreBackgroundMusicVolume();
+                    }
                 });
                 
                 // Handle mobile touch events - CRITICAL for mobile
@@ -260,6 +277,25 @@
             } else {
                 // Pause this audio
                 audio.pause();
+            }
+        }
+        
+        // Background music volume control
+        function lowerBackgroundMusicVolume() {
+            const iframe = document.getElementById('backgroundMusic');
+            if (iframe) {
+                // Lower background music opacity when audio plays
+                iframe.style.opacity = '0.05';
+                console.log('Background music volume lowered');
+            }
+        }
+        
+        function restoreBackgroundMusicVolume() {
+            const iframe = document.getElementById('backgroundMusic');
+            if (iframe) {
+                // Restore background music opacity when no audio is playing
+                iframe.style.opacity = '0.1';
+                console.log('Background music volume restored');
             }
         }
         
