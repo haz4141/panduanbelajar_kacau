@@ -17,28 +17,24 @@
     </iframe>
     
     <script>
-        // Pure JavaScript password protection
-        function showPasswordPrompt() {
-            var password = prompt("Enter password to access website:");
+        // Simple password protection
+        function checkPassword() {
+            var password = document.getElementById('passwordInput').value;
             if (password === 'haz-voucher') {
-                // Password correct - hide modal and remove blur
                 document.getElementById('passwordModal').style.display = 'none';
                 document.body.style.filter = 'none';
                 document.body.style.overflow = 'auto';
-            } else if (password !== null) {
-                // Wrong password - show error and try again
-                alert('Password anda salah!');
-                showPasswordPrompt(); // Try again
             } else {
-                // User cancelled - show again
-                showPasswordPrompt();
+                alert('Password anda salah!');
+                document.getElementById('passwordInput').value = '';
             }
         }
         
-        // Show password prompt immediately when page loads
-        window.onload = function() {
-            showPasswordPrompt();
-        };
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
         
         // Force play on any user interaction to bypass autoplay restrictions
         function startMusic() {
