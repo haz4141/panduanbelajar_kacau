@@ -22,7 +22,11 @@
             var password = document.getElementById('passwordInput').value;
             if (password === 'haz-voucher') {
                 document.getElementById('passwordModal').style.display = 'none';
-                document.body.style.filter = 'none';
+                // Remove blur from background pages
+                var pages = document.querySelectorAll('.page');
+                for (var i = 0; i < pages.length; i++) {
+                    pages[i].style.filter = 'none';
+                }
                 document.body.style.overflow = 'auto';
             } else {
                 alert('Password anda salah!');
