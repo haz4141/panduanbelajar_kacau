@@ -545,8 +545,39 @@
                 volumeIcon.textContent = '🔊';
             }
             
+            // Update volume bar visual background
+            updateCustomVolumeBarBackground(slider, volume);
+            
             // Store volume preference
             localStorage.setItem('audioVolume_' + audio.src, volume);
+        }
+        
+        function updateCustomVolumeBarBackground(slider, volume) {
+            const percentage = Math.round(volume * 100);
+            
+            // Enhanced visual background with gradient
+            slider.style.background = `linear-gradient(to right, 
+                #667eea 0%, 
+                #764ba2 ${percentage}%, 
+                #e9ecef ${percentage}%, 
+                #f8f9fa 100%
+            )`;
+            
+            // Add glow effect for active volume
+            if (percentage > 0) {
+                slider.style.boxShadow = `
+                    inset 0 2px 4px rgba(0,0,0,0.1),
+                    0 4px 15px rgba(102, 126, 234, 0.2),
+                    0 0 0 1px rgba(255,255,255,0.5),
+                    0 0 ${percentage/2}px rgba(102, 126, 234, 0.3)
+                `;
+            } else {
+                slider.style.boxShadow = `
+                    inset 0 2px 4px rgba(0,0,0,0.1),
+                    0 4px 15px rgba(102, 126, 234, 0.2),
+                    0 0 0 1px rgba(255,255,255,0.5)
+                `;
+            }
         }
         
         function formatTime(seconds) {
@@ -614,6 +645,12 @@
                     } else {
                         volumeIcon.textContent = '🔊';
                     }
+                    
+                    // Update volume bar background
+                    updateCustomVolumeBarBackground(volumeBar, volume);
+                } else {
+                    // Set initial volume bar background for 100%
+                    updateCustomVolumeBarBackground(volumeBar, 1);
                 }
                 
                 // Load audio
