@@ -937,9 +937,9 @@ blockquote cite {
     #backgroundVolumeSlider {
         -webkit-appearance: none;
         appearance: none;
-        height: 25px;
-        border-radius: 12px;
-        background: #ddd;
+        height: 35px;
+        border-radius: 17px;
+        background: linear-gradient(to right, #667eea 0%, #667eea 5%, #ddd 5%, #ddd 100%);
         outline: none;
         cursor: pointer;
         touch-action: none;
@@ -947,11 +947,13 @@ blockquote cite {
         -webkit-user-select: none;
         user-select: none;
         position: relative;
-        width: 120px;
-        min-width: 120px;
+        width: 150px;
+        min-width: 150px;
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+        border: 3px solid rgba(102, 126, 234, 0.3);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
     }
     
     /* iOS specific volume slider */
