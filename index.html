@@ -400,6 +400,131 @@
         window.addEventListener('load', initIOSAudio);
         document.addEventListener('DOMContentLoaded', initIOSAudio);
         
+        // Custom Audio Control Functions
+        function toggleAudio(button) {
+            const container = button.closest('.ios-audio-container');
+            const audio = container.querySelector('.chapter-audio');
+            
+            if (audio.paused) {
+                // Pause all other audios first
+                document.querySelectorAll('.chapter-audio').forEach(otherAudio => {
+                    if (otherAudio !== audio && !otherAudio.paused) {
+                        otherAudio.pause();
+                        const otherContainer = otherAudio.closest('.ios-audio-container');
+                        const otherButton = otherContainer.querySelector('.play-pause-btn');
+                        otherButton.textContent = '▶️';
+                    }
+                });
+                
+                audio.play().then(() => {
+                    button.textContent = '⏸️';
+                    lowerBackgroundMusicVolume();
+                }).catch(e => {
+                    console.log('Play failed:', e);
+                    button.textContent = '▶️';
+                });
+            } else {
+                audio.pause();
+                button.textContent = '▶️';
+                restoreBackgroundMusicVolume();
+            }
+        }
+        
+        function seekAudio(slider) {
+            const container = slider.closest('.ios-audio-container');
+            const audio = container.querySelector('.chapter-audio');
+            if (audio.duration) {
+                audio.currentTime = (slider.value / 100) * audio.duration;
+            }
+        }
+        
+        function changeVolume(slider) {
+            const container = slider.closest('.ios-audio-container');
+            const audio = container.querySelector('.chapter-audio');
+            const volume = slider.value / 100;
+            audio.volume = volume;
+            
+            // Update volume icon
+            const volumeIcon = container.querySelector('.volume-container span');
+            if (volume === 0) {
+                volumeIcon.textContent = '🔇';
+            } else if (volume < 0.5) {
+                volumeIcon.textContent = '🔉';
+            } else {
+                volumeIcon.textContent = '🔊';
+            }
+        }
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+        
+        function updateAudioProgress() {
+            document.querySelectorAll('.ios-audio-container').forEach(container => {
+                const audio = container.querySelector('.chapter-audio');
+                const progressBar = container.querySelector('.progress-bar');
+                const timeDisplay = container.querySelector('.time-display');
+                const playButton = container.querySelector('.play-pause-btn');
+                
+                if (audio.duration) {
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    progressBar.value = progress;
+                    timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+                }
+                
+                // Update play/pause button
+                if (audio.paused) {
+                    playButton.textContent = '▶️';
+                } else {
+                    playButton.textContent = '⏸️';
+                }
+                
+                // Handle audio end
+                if (audio.ended) {
+                    playButton.textContent = '▶️';
+                    progressBar.value = 0;
+                    restoreBackgroundMusicVolume();
+                }
+            });
+        }
+        
+        // Update progress every second
+        setInterval(updateAudioProgress, 1000);
+        
+        // Initialize custom audio controls
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.ios-audio-container').forEach(container => {
+                const audio = container.querySelector('.chapter-audio');
+                const progressBar = container.querySelector('.progress-bar');
+                const volumeBar = container.querySelector('.volume-bar');
+                
+                // Set initial volume
+                audio.volume = 1;
+                volumeBar.value = 100;
+                
+                // Load audio
+                audio.load();
+                
+                // Handle audio events
+                audio.addEventListener('loadedmetadata', function() {
+                    progressBar.max = 100;
+                    updateAudioProgress();
+                });
+                
+                audio.addEventListener('play', function() {
+                    const playButton = container.querySelector('.play-pause-btn');
+                    playButton.textContent = '⏸️';
+                });
+                
+                audio.addEventListener('pause', function() {
+                    const playButton = container.querySelector('.play-pause-btn');
+                    playButton.textContent = '▶️';
+                });
+            });
+        });
+        
         // Mobile audio test function
         function testMobileAudio() {
             const audioElements = document.querySelectorAll('.chapter-audio');
@@ -748,10 +873,23 @@
             <!-- Audio Player for Bab 1 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 1</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab1.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab1.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
@@ -811,10 +949,23 @@
             <!-- Audio Player for Bab 2 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 2</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab2.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab2.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
@@ -911,10 +1062,23 @@
             <!-- Audio Player for Bab 3 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 3</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab3.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab3.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
@@ -984,10 +1148,23 @@
             <!-- Audio Player for Bab 4 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 4</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab4.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab4.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
@@ -1059,10 +1236,23 @@
             <!-- Audio Player for Bab 5 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 5</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab5.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab5.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
@@ -1131,10 +1321,23 @@
             <!-- Audio Player for Bab 6 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 6</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab6.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab6.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
@@ -1235,10 +1438,23 @@
             <!-- Audio Player for Bab 7 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 7</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab7.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab7.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
@@ -1313,10 +1529,23 @@
             <!-- Audio Player for Bab 8 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 8</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab8.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab8.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
@@ -1426,10 +1655,23 @@
             <!-- Audio Player for Bab 9 -->
             <div class="audio-player">
                 <h3>🎧 Dengarkan Audio Bab 9</h3>
-                <audio controls class="chapter-audio" preload="metadata" playsinline webkit-playsinline x-webkit-airplay="allow" controlslist="nodownload nofullscreen noremoteplayback" style="width: 100%; height: 60px; min-height: 60px; max-height: 60px; display: block; visibility: visible; opacity: 1;">
-                    <source src="Bab9.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="ios-audio-container">
+                    <audio class="chapter-audio" preload="metadata" playsinline webkit-playsinline>
+                        <source src="Bab9.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="custom-audio-controls">
+                        <button class="play-pause-btn" onclick="toggleAudio(this)">▶️</button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span>🔊</span>
+                            <input type="range" class="volume-bar" min="0" max="100" value="100" onchange="changeVolume(this)">
+                        </div>
+                    </div>
+                </div>
                 <p class="audio-note">Dengarkan audio untuk pengalaman belajar yang lebih mendalam</p>
             </div>
             
