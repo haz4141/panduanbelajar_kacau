@@ -37,24 +37,28 @@
                 // Show Chatbase chatbot after password is correct
                 showChatbaseWidget();
                 
-                // Fix audio initialization after password entry
+                // Preserve and continue background music
+                preserveBackgroundMusic();
+                
+                // DON'T interfere with background music - let it continue playing
+                // Just ensure it's playing at normal speed
                 setTimeout(() => {
                     const audio = document.getElementById('backgroundMusic');
                     if (audio) {
-                        // Reset audio properties
-                        audio.playbackRate = 1.0;
-                        audio.currentTime = 0;
-                        audio.volume = 0.05;
-                        
-                        // Force reload and proper initialization
-                        audio.load();
-                        setTimeout(() => {
+                        // Only fix playback rate if it's wrong, don't restart or change volume
+                        if (audio.playbackRate !== 1.0) {
                             audio.playbackRate = 1.0;
-                            audio.volume = 0.05;
+                            console.log('Fixed audio playback rate to normal');
+                        }
+                        
+                        // If audio is paused, resume it (don't restart)
+                        if (audio.paused) {
                             audio.play().catch(e => {
                                 console.log('Audio autoplay blocked after password');
                             });
-                        }, 200);
+                        }
+                        
+                        console.log('Background music continues playing after password');
                     }
                 }, 100);
                 
@@ -112,26 +116,12 @@
         function startMusic() {
             const audio = document.getElementById('backgroundMusic');
             if (audio) {
-                // Reset audio properties to ensure normal playback
-                audio.volume = 0.05;
+                // Only ensure normal playback rate, don't restart or change volume
                 audio.playbackRate = 1.0; // Ensure normal playback speed
-                audio.currentTime = 0; // Reset to beginning
                 
-                // Force audio reload for iOS
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-                             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-                
-                if (isIOS) {
-                    // iOS specific audio initialization
-                    audio.load();
-                    setTimeout(() => {
-                        audio.playbackRate = 1.0;
-                        audio.volume = 0.05;
-                        audio.play().catch(e => {
-                            console.log('iOS background music autoplay blocked, will start on user interaction');
-                        });
-                    }, 100);
-                } else {
+                // Don't reset currentTime or volume - let it continue as is
+                // Only play if it's paused
+                if (audio.paused) {
                     audio.play().catch(e => {
                         console.log('Background music autoplay blocked, will start on user interaction');
                     });
@@ -148,7 +138,12 @@
         
         // Also try to start immediately when page loads
         window.addEventListener('load', function() {
-            setTimeout(startMusic, 1000);
+            setTimeout(() => {
+                const audio = document.getElementById('backgroundMusic');
+                if (audio && audio.paused) {
+                    startMusic();
+                }
+            }, 1000);
         });
         
         // Background music control
@@ -441,6 +436,33 @@
         // Initialize iOS audio on page load
         window.addEventListener('load', initIOSAudio);
         document.addEventListener('DOMContentLoaded', initIOSAudio);
+        
+        // Function to preserve background music state
+        function preserveBackgroundMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            if (audio) {
+                // Store current state
+                const wasPlaying = !audio.paused;
+                const currentTime = audio.currentTime;
+                const currentVolume = audio.volume;
+                
+                console.log('Background music state:', { wasPlaying, currentTime, currentVolume });
+                
+                // If it was playing, ensure it continues
+                if (wasPlaying) {
+                    setTimeout(() => {
+                        if (audio.paused) {
+                            audio.currentTime = currentTime;
+                            audio.volume = currentVolume;
+                            audio.playbackRate = 1.0;
+                            audio.play().catch(e => {
+                                console.log('Failed to resume background music:', e);
+                            });
+                        }
+                    }, 100);
+                }
+            }
+        }
         
         // Special iOS background music volume control
         function forceIOSBackgroundVolume(volume) {
@@ -887,10 +909,13 @@
             const audio = document.getElementById('backgroundMusic');
             
             if (slider && value && audio) {
-                // Ensure audio properties are correct
-                audio.playbackRate = 1.0;
-                audio.volume = 0.05;
-                audio.currentTime = 0;
+                // Only fix playback rate if it's wrong, don't change volume or restart
+                if (audio.playbackRate !== 1.0) {
+                    audio.playbackRate = 1.0;
+                    console.log('Fixed audio playback rate in setup');
+                }
+                
+                // Don't change volume or currentTime - let it continue as is
                 
                 let isDragging = false;
                 let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
