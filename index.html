@@ -880,7 +880,30 @@
                 // Function to update slider visual background
                 function updateSliderBackground(percentage) {
                     const progress = Math.max(0, Math.min(100, percentage));
-                    slider.style.background = `linear-gradient(to right, #667eea 0%, #667eea ${progress}%, #ddd ${progress}%, #ddd 100%)`;
+                    
+                    // Enhanced visual background with gradient
+                    slider.style.background = `linear-gradient(to right, 
+                        #667eea 0%, 
+                        #764ba2 ${progress}%, 
+                        #e9ecef ${progress}%, 
+                        #f8f9fa 100%
+                    )`;
+                    
+                    // Add glow effect for active volume
+                    if (progress > 0) {
+                        slider.style.boxShadow = `
+                            inset 0 2px 4px rgba(0,0,0,0.1),
+                            0 4px 15px rgba(102, 126, 234, 0.2),
+                            0 0 0 1px rgba(255,255,255,0.5),
+                            0 0 ${progress/2}px rgba(102, 126, 234, 0.3)
+                        `;
+                    } else {
+                        slider.style.boxShadow = `
+                            inset 0 2px 4px rgba(0,0,0,0.1),
+                            0 4px 15px rgba(102, 126, 234, 0.2),
+                            0 0 0 1px rgba(255,255,255,0.5)
+                        `;
+                    }
                 }
                 
                 // Function to get accurate slider value
