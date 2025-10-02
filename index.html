@@ -442,7 +442,49 @@
             const container = slider.closest('.ios-audio-container');
             const audio = container.querySelector('.chapter-audio');
             const volume = slider.value / 100;
-            audio.volume = volume;
+            
+            // iOS specific volume handling
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            
+            if (isIOS) {
+                // iOS requires multiple attempts to change volume
+                audio.volume = 0; // Reset first
+                setTimeout(() => {
+                    audio.volume = volume;
+                    console.log('iOS volume set to:', volume);
+                    
+                    // Backup attempt
+                    setTimeout(() => {
+                        if (Math.abs(audio.volume - volume) > 0.01) {
+                            audio.volume = volume;
+                            console.log('iOS volume backup set to:', volume);
+                        }
+                    }, 50);
+                    
+                    // Another backup attempt
+                    setTimeout(() => {
+                        if (Math.abs(audio.volume - volume) > 0.01) {
+                            audio.volume = volume;
+                            console.log('iOS volume final set to:', volume);
+                        }
+                    }, 100);
+                }, 10);
+                
+                // Force volume change by playing/pausing briefly if needed
+                if (volume > 0 && audio.paused) {
+                    const wasPlaying = false;
+                    audio.play().then(() => {
+                        audio.pause();
+                        console.log('iOS volume trigger play/pause');
+                    }).catch(e => {
+                        console.log('iOS volume trigger failed:', e);
+                    });
+                }
+            } else {
+                // Standard volume setting for non-iOS devices
+                audio.volume = volume;
+            }
             
             // Update volume icon
             const volumeIcon = container.querySelector('.volume-container span');
@@ -453,6 +495,9 @@
             } else {
                 volumeIcon.textContent = '🔊';
             }
+            
+            // Store volume preference
+            localStorage.setItem('audioVolume_' + audio.src, volume);
         }
         
         function formatTime(seconds) {
@@ -504,8 +549,119 @@
                 audio.volume = 1;
                 volumeBar.value = 100;
                 
+                // Load saved volume preference
+                const savedVolume = localStorage.getItem('audioVolume_' + audio.src);
+                if (savedVolume) {
+                    audio.volume = parseFloat(savedVolume);
+                    volumeBar.value = Math.round(parseFloat(savedVolume) * 100);
+                    
+                    // Update volume icon
+                    const volumeIcon = container.querySelector('.volume-container span');
+                    const volume = parseFloat(savedVolume);
+                    if (volume === 0) {
+                        volumeIcon.textContent = '🔇';
+                    } else if (volume < 0.5) {
+                        volumeIcon.textContent = '🔉';
+                    } else {
+                        volumeIcon.textContent = '🔊';
+                    }
+                }
+                
                 // Load audio
                 audio.load();
+                
+                // iOS specific volume slider enhancements
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                
+                if (isIOS) {
+                    // Enhanced iOS volume slider touch handling
+                    let isVolumeDragging = false;
+                    
+                    volumeBar.addEventListener('touchstart', function(e) {
+                        isVolumeDragging = true;
+                        console.log('iOS volume touch start');
+                        // Don't prevent default to allow native behavior
+                    }, { passive: false });
+                    
+                    volumeBar.addEventListener('touchmove', function(e) {
+                        if (isVolumeDragging) {
+                            const rect = this.getBoundingClientRect();
+                            const touch = e.touches[0];
+                            const percentage = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+                            const newValue = Math.round(percentage * 100);
+                            this.value = newValue;
+                            
+                            // Immediately update volume
+                            const volume = newValue / 100;
+                            audio.volume = 0;
+                            setTimeout(() => {
+                                audio.volume = volume;
+                                console.log('iOS volume touch move:', volume);
+                            }, 10);
+                            
+                            // Update volume icon
+                            const volumeIcon = container.querySelector('.volume-container span');
+                            if (volume === 0) {
+                                volumeIcon.textContent = '🔇';
+                            } else if (volume < 0.5) {
+                                volumeIcon.textContent = '🔉';
+                            } else {
+                                volumeIcon.textContent = '🔊';
+                            }
+                            
+                            e.preventDefault();
+                        }
+                    }, { passive: false });
+                    
+                    volumeBar.addEventListener('touchend', function(e) {
+                        isVolumeDragging = false;
+                        console.log('iOS volume touch end, final value:', this.value);
+                        
+                        // Final volume update
+                        const volume = this.value / 100;
+                        audio.volume = 0;
+                        setTimeout(() => {
+                            audio.volume = volume;
+                            console.log('iOS volume touch end set to:', volume);
+                        }, 50);
+                        
+                        // Store preference
+                        localStorage.setItem('audioVolume_' + audio.src, volume);
+                    }, { passive: false });
+                    
+                    // iOS specific input event handling
+                    volumeBar.addEventListener('input', function() {
+                        const volume = this.value / 100;
+                        audio.volume = 0;
+                        setTimeout(() => {
+                            audio.volume = volume;
+                            console.log('iOS volume input:', volume);
+                        }, 10);
+                        
+                        // Multiple backup attempts
+                        setTimeout(() => {
+                            audio.volume = volume;
+                        }, 100);
+                        
+                        setTimeout(() => {
+                            audio.volume = volume;
+                        }, 200);
+                        
+                        // Update icon
+                        const volumeIcon = container.querySelector('.volume-container span');
+                        if (volume === 0) {
+                            volumeIcon.textContent = '🔇';
+                        } else if (volume < 0.5) {
+                            volumeIcon.textContent = '🔉';
+                        } else {
+                            volumeIcon.textContent = '🔊';
+                        }
+                        
+                        // Store preference
+                        localStorage.setItem('audioVolume_' + audio.src, volume);
+                    });
+                }
                 
                 // Handle audio events
                 audio.addEventListener('loadedmetadata', function() {
@@ -522,6 +678,17 @@
                     const playButton = container.querySelector('.play-pause-btn');
                     playButton.textContent = '▶️';
                 });
+                
+                // iOS specific volume sync
+                if (isIOS) {
+                    setInterval(() => {
+                        const expectedVolume = volumeBar.value / 100;
+                        if (Math.abs(audio.volume - expectedVolume) > 0.01) {
+                            audio.volume = expectedVolume;
+                            console.log('iOS volume sync to:', expectedVolume);
+                        }
+                    }, 1000);
+                }
             });
         });
         
