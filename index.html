@@ -400,6 +400,55 @@
         window.addEventListener('load', initIOSAudio);
         document.addEventListener('DOMContentLoaded', initIOSAudio);
         
+        // Special iOS background music volume control
+        function forceIOSBackgroundVolume(volume) {
+            const audio = document.getElementById('backgroundMusic');
+            const slider = document.getElementById('backgroundVolumeSlider');
+            const value = document.getElementById('backgroundVolumeValue');
+            
+            if (!audio || !slider || !value) return;
+            
+            const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || 
+                         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            
+            if (isIOS) {
+                console.log('Force iOS background volume to:', volume);
+                
+                // Set slider and display
+                slider.value = volume;
+                value.textContent = volume + '%';
+                
+                const volumeDecimal = volume / 100;
+                
+                // Aggressive volume setting for iOS
+                audio.volume = 0;
+                
+                // Multiple attempts with different timings
+                setTimeout(() => { audio.volume = volumeDecimal; }, 10);
+                setTimeout(() => { audio.volume = volumeDecimal; }, 50);
+                setTimeout(() => { audio.volume = volumeDecimal; }, 100);
+                setTimeout(() => { audio.volume = volumeDecimal; }, 200);
+                setTimeout(() => { audio.volume = volumeDecimal; }, 500);
+                
+                // If volume is 0, force pause
+                if (volumeDecimal === 0) {
+                    setTimeout(() => {
+                        audio.pause();
+                        console.log('iOS background music force paused');
+                    }, 100);
+                }
+                
+                // Store preference
+                localStorage.setItem('backgroundMusicVolume', volume);
+                
+                // Update visual background
+                slider.style.background = `linear-gradient(to right, #667eea 0%, #667eea ${volume}%, #ddd ${volume}%, #ddd 100%)`;
+            }
+        }
+        
+        // Add global function for testing
+        window.forceIOSBackgroundVolume = forceIOSBackgroundVolume;
+        
         // Custom Audio Control Functions
         function toggleAudio(button) {
             const container = button.closest('.ios-audio-container');
@@ -761,17 +810,62 @@
             if (slider && value && audio) {
                 let isDragging = false;
                 let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || 
+                             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
                 
-                // Function to update volume with proper iOS handling
+                // Enhanced iOS volume update function
                 function updateVolume(volumeValue) {
                     const volume = Math.max(0, Math.min(1, volumeValue / 100));
                     
-                    // Force volume update for iOS
-                    audio.volume = 0; // Reset first
-                    setTimeout(() => {
+                    if (isIOS) {
+                        console.log('iOS background music volume update:', volume);
+                        
+                        // iOS requires aggressive volume setting
+                        audio.volume = 0; // Reset first
+                        
+                        // Multiple attempts to set volume on iOS
+                        setTimeout(() => {
+                            audio.volume = volume;
+                            console.log('iOS volume attempt 1:', volume);
+                        }, 10);
+                        
+                        setTimeout(() => {
+                            audio.volume = volume;
+                            console.log('iOS volume attempt 2:', volume);
+                        }, 50);
+                        
+                        setTimeout(() => {
+                            audio.volume = volume;
+                            console.log('iOS volume attempt 3:', volume);
+                        }, 100);
+                        
+                        setTimeout(() => {
+                            audio.volume = volume;
+                            console.log('iOS volume attempt 4:', volume);
+                        }, 200);
+                        
+                        // Force audio reload if volume is 0
+                        if (volume === 0) {
+                            audio.pause();
+                            setTimeout(() => {
+                                audio.load();
+                                console.log('iOS audio reloaded for volume 0');
+                            }, 100);
+                        }
+                        
+                        // Additional iOS volume enforcement
+                        setTimeout(() => {
+                            if (Math.abs(audio.volume - volume) > 0.01) {
+                                audio.volume = volume;
+                                console.log('iOS volume enforcement:', volume);
+                            }
+                        }, 500);
+                        
+                    } else {
+                        // Standard volume setting for non-iOS
                         audio.volume = volume;
-                        console.log('Volume set to:', volume, 'Percentage:', volumeValue);
-                    }, 10);
+                        console.log('Standard volume set to:', volume);
+                    }
                     
                     value.textContent = Math.round(volumeValue) + '%';
                     localStorage.setItem('backgroundMusicVolume', volumeValue);
@@ -804,23 +898,59 @@
                 slider.addEventListener('input', function() {
                     const val = getSliderValue();
                     updateVolume(val);
-                    console.log('Input event - Volume:', val);
+                    console.log('Background music input event - Volume:', val);
+                    
+                    if (isIOS) {
+                        // Additional iOS input handling
+                        const volume = val / 100;
+                        audio.volume = 0;
+                        setTimeout(() => {
+                            audio.volume = volume;
+                            console.log('iOS input volume backup:', volume);
+                        }, 20);
+                    }
                 });
                 
                 // Change event for better compatibility
                 slider.addEventListener('change', function() {
                     const val = getSliderValue();
                     updateVolume(val);
-                    console.log('Change event - Volume:', val);
+                    console.log('Background music change event - Volume:', val);
+                    
+                    if (isIOS) {
+                        // Additional iOS change handling
+                        const volume = val / 100;
+                        audio.volume = 0;
+                        setTimeout(() => {
+                            audio.volume = volume;
+                            console.log('iOS change volume backup:', volume);
+                        }, 30);
+                        
+                        // If volume is 0, ensure audio is paused
+                        if (volume === 0) {
+                            setTimeout(() => {
+                                audio.pause();
+                                console.log('iOS audio paused on change for volume 0');
+                            }, 100);
+                        }
+                    }
                 });
                 
-                // Touch events for mobile with iOS improvements
+                // Enhanced touch events for mobile with iOS improvements
                 if (isMobile) {
                     slider.addEventListener('touchstart', function(e) {
                         isDragging = true;
-                        console.log('Touch start');
+                        console.log('Background music touch start');
+                        
+                        if (isIOS) {
+                            // iOS specific touch start
+                            console.log('iOS background music touch start');
+                            slider.style.transform = 'scale(1.1)';
+                            slider.style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.5)';
+                        }
+                        
                         // Don't prevent default on iOS to allow native behavior
-                        if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        if (!isIOS) {
                             e.preventDefault();
                         }
                     }, { passive: false });
@@ -833,30 +963,62 @@
                             const newValue = Math.round(percentage * 100);
                             setSliderValue(newValue);
                             
-                            // iOS specific handling
-                            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                            console.log('Background music touch move:', newValue);
+                            
+                            if (isIOS) {
                                 e.preventDefault();
-                                // Force visual update
-                                slider.style.transform = 'scale(1.05)';
+                                // Force immediate volume update on iOS
+                                const volume = newValue / 100;
+                                audio.volume = 0;
                                 setTimeout(() => {
-                                    slider.style.transform = 'scale(1)';
-                                }, 100);
+                                    audio.volume = volume;
+                                    console.log('iOS touch move volume:', volume);
+                                }, 5);
+                                
+                                // Visual feedback
+                                slider.style.transform = 'scale(1.05)';
+                                slider.style.boxShadow = '0 0 25px rgba(102, 126, 234, 0.6)';
                             }
                         }
                     }, { passive: false });
                     
                     slider.addEventListener('touchend', function(e) {
                         isDragging = false;
-                        console.log('Touch end - Final volume:', getSliderValue());
+                        const finalValue = getSliderValue();
+                        console.log('Background music touch end - Final volume:', finalValue);
                         
-                        // iOS specific final update
-                        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                            const finalValue = getSliderValue();
+                        if (isIOS) {
+                            // iOS specific final update with multiple attempts
+                            const volume = finalValue / 100;
+                            
+                            // Reset and set volume multiple times
                             audio.volume = 0;
                             setTimeout(() => {
-                                audio.volume = finalValue / 100;
-                                console.log('iOS final volume set:', finalValue);
+                                audio.volume = volume;
+                                console.log('iOS touchend volume 1:', volume);
+                            }, 10);
+                            
+                            setTimeout(() => {
+                                audio.volume = volume;
+                                console.log('iOS touchend volume 2:', volume);
                             }, 50);
+                            
+                            setTimeout(() => {
+                                audio.volume = volume;
+                                console.log('iOS touchend volume 3:', volume);
+                            }, 100);
+                            
+                            // If volume is 0, pause the audio completely
+                            if (volume === 0) {
+                                setTimeout(() => {
+                                    audio.pause();
+                                    console.log('iOS audio paused for volume 0');
+                                }, 150);
+                            }
+                            
+                            // Reset visual feedback
+                            slider.style.transform = 'scale(1)';
+                            slider.style.boxShadow = 'none';
                         }
                     }, { passive: false });
                     
@@ -949,7 +1111,9 @@
                 }, 100);
                 
                 // iOS specific audio initialization with enhanced handling
-                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                if (isIOS) {
+                    console.log('iOS background music initialization');
+                    
                     // Force audio to be ready for iOS
                     audio.load();
                     audio.preload = 'auto';
@@ -957,32 +1121,65 @@
                     // Enhanced iOS volume initialization
                     setTimeout(() => {
                         const currentValue = getSliderValue();
+                        const volume = currentValue / 100;
+                        
+                        // Multiple volume setting attempts
                         audio.volume = 0;
                         setTimeout(() => {
-                            audio.volume = currentValue / 100;
-                            console.log('iOS initial volume fix:', currentValue);
-                            updateSliderBackground(currentValue);
+                            audio.volume = volume;
+                            console.log('iOS background music initial volume 1:', volume);
                         }, 100);
                         
-                        // Multiple backup attempts for iOS
                         setTimeout(() => {
-                            audio.volume = currentValue / 100;
+                            audio.volume = volume;
+                            console.log('iOS background music initial volume 2:', volume);
                         }, 300);
                         
                         setTimeout(() => {
-                            audio.volume = currentValue / 100;
+                            audio.volume = volume;
+                            console.log('iOS background music initial volume 3:', volume);
                         }, 600);
+                        
+                        updateSliderBackground(currentValue);
                     }, 500);
                     
-                    // iOS specific periodic volume sync
+                    // iOS specific aggressive volume sync
                     setInterval(() => {
                         const currentValue = getSliderValue();
                         const expectedVolume = currentValue / 100;
+                        
+                        // Check if volume is different and force correction
                         if (Math.abs(audio.volume - expectedVolume) > 0.01) {
-                            audio.volume = expectedVolume;
-                            console.log('iOS volume sync:', expectedVolume);
+                            console.log('iOS background music volume correction needed:', expectedVolume, 'current:', audio.volume);
+                            
+                            // Force volume correction
+                            audio.volume = 0;
+                            setTimeout(() => {
+                                audio.volume = expectedVolume;
+                                console.log('iOS background music volume corrected to:', expectedVolume);
+                            }, 10);
+                            
+                            // If volume should be 0, pause audio
+                            if (expectedVolume === 0 && !audio.paused) {
+                                audio.pause();
+                                console.log('iOS background music paused for volume 0');
+                            }
                         }
-                    }, 2000);
+                    }, 1000); // Check every second for iOS
+                    
+                    // Additional iOS volume enforcement
+                    setInterval(() => {
+                        const currentValue = getSliderValue();
+                        const expectedVolume = currentValue / 100;
+                        
+                        if (expectedVolume === 0) {
+                            audio.pause();
+                        } else if (expectedVolume > 0 && audio.paused) {
+                            audio.play().catch(e => {
+                                console.log('iOS background music play failed:', e);
+                            });
+                        }
+                    }, 500); // Check every 500ms for play/pause state
                 }
             }
         }
