@@ -730,36 +730,81 @@ blockquote cite {
 
 .volume-bar {
     width: 150px;
-    height: 6px;
-    border-radius: 3px;
+    height: 8px;
+    border-radius: 4px;
     background: rgba(255, 255, 255, 0.3);
     outline: none;
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .volume-bar::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background: #667eea;
     cursor: pointer;
-    border: 2px solid white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .volume-bar::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background: #667eea;
     cursor: pointer;
-    border: 2px solid white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     border: none;
+}
+
+/* iOS specific volume bar enhancements */
+@supports (-webkit-touch-callout: none) {
+    .volume-bar {
+        height: 12px;
+        background: linear-gradient(to right, #667eea 0%, #667eea 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 100%);
+        border: 2px solid rgba(102, 126, 234, 0.3);
+    }
+    
+    .volume-bar::-webkit-slider-thumb {
+        width: 28px;
+        height: 28px;
+        border: 4px solid white;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    
+    .volume-bar::-moz-range-thumb {
+        width: 28px;
+        height: 28px;
+        border: 4px solid white;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border: none;
+    }
+    
+    /* iOS volume bar active state */
+    .volume-bar:active {
+        transform: scale(1.05);
+        transition: transform 0.1s ease;
+    }
+    
+    .volume-bar::-webkit-slider-thumb:active {
+        transform: scale(1.2);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+    }
+    
+    .volume-bar::-moz-range-thumb:active {
+        transform: scale(1.2);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+    }
 }
 
 .audio-player h3 {
@@ -843,20 +888,26 @@ blockquote cite {
     }
     
     .volume-bar {
-        width: 120px;
-        height: 8px;
+        width: 140px;
+        height: 12px;
+        background: linear-gradient(to right, #667eea 0%, #667eea 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 100%);
+        border: 2px solid rgba(102, 126, 234, 0.3);
     }
     
     .volume-bar::-webkit-slider-thumb {
-        width: 22px;
-        height: 22px;
-        border-width: 3px;
+        width: 30px;
+        height: 30px;
+        border-width: 4px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     }
     
     .volume-bar::-moz-range-thumb {
-        width: 22px;
-        height: 22px;
-        border-width: 3px;
+        width: 30px;
+        height: 30px;
+        border-width: 4px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     }
     
     .time-display {
