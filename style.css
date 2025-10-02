@@ -662,17 +662,215 @@ blockquote cite {
     font-style: italic;
 }
 
-/* Mobile audio optimizations */
+/* iOS and Mobile audio optimizations */
 @media screen and (max-width: 768px) {
     .chapter-audio {
-        width: 100%;
-        height: 60px;
+        width: 100% !important;
+        height: 60px !important;
+        min-height: 60px !important;
+        max-height: 60px !important;
         border-radius: 30px;
         -webkit-appearance: none;
         appearance: none;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
         border: 2px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 10 !important;
+    }
+    
+    /* iOS Safari specific fixes */
+    @supports (-webkit-touch-callout: none) {
+        .chapter-audio {
+            height: 70px !important;
+            min-height: 70px !important;
+            max-height: 70px !important;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 35px;
+        }
+    }
+    
+    /* Mobile volume slider improvements */
+    #backgroundVolumeSlider {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 25px;
+        border-radius: 12px;
+        background: #ddd;
+        outline: none;
+        cursor: pointer;
+        touch-action: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        position: relative;
+        width: 120px;
+        min-width: 120px;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* iOS specific volume slider */
+    @supports (-webkit-touch-callout: none) {
+        #backgroundVolumeSlider {
+            height: 30px;
+            border-radius: 15px;
+            width: 140px;
+            min-width: 140px;
+            background: linear-gradient(to right, #667eea 0%, #667eea 5%, #ddd 5%, #ddd 100%);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+        }
+    }
+    
+    /* Dynamic background based on value */
+    #backgroundVolumeSlider::-webkit-slider-track {
+        background: #ddd;
+        height: 20px;
+        border-radius: 10px;
+    }
+    
+    #backgroundVolumeSlider::-moz-range-track {
+        background: #ddd;
+        height: 20px;
+        border-radius: 10px;
+        border: none;
+    }
+    
+    #backgroundVolumeSlider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #667eea;
+        cursor: pointer;
+        border: 3px solid white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* iOS specific slider thumb */
+    @supports (-webkit-touch-callout: none) {
+        #backgroundVolumeSlider::-webkit-slider-thumb {
+            width: 32px;
+            height: 32px;
+            border: 4px solid white;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
+        }
+    }
+    
+    #backgroundVolumeSlider::-webkit-slider-thumb:active {
+        transform: scale(1.2);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+    }
+    
+    #backgroundVolumeSlider::-moz-range-thumb {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #667eea;
+        cursor: pointer;
+        border: 3px solid white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        transition: all 0.2s ease;
+    }
+    
+    /* iOS specific moz slider thumb */
+    @supports (-webkit-touch-callout: none) {
+        #backgroundVolumeSlider::-moz-range-thumb {
+            width: 32px;
+            height: 32px;
+            border: 4px solid white;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
+        }
+    }
+    
+    #backgroundVolumeSlider::-moz-range-thumb:active {
+        transform: scale(1.2);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+    }
+    
+    /* Mobile-specific slider improvements */
+    @media screen and (max-width: 768px) {
+        #backgroundVolumeSlider {
+            height: 30px;
+            background: linear-gradient(to right, #667eea 0%, #667eea 5%, #ddd 5%, #ddd 100%);
+            border-radius: 15px;
+            touch-action: none;
+            width: 140px;
+            min-width: 140px;
+        }
+        
+        #backgroundVolumeSlider::-webkit-slider-thumb {
+            width: 32px;
+            height: 32px;
+            border: 4px solid white;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        #backgroundVolumeSlider::-moz-range-thumb {
+            width: 32px;
+            height: 32px;
+            border: 4px solid white;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .background-music-controls {
+            padding: 20px !important;
+            border-radius: 20px !important;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.4) !important;
+            background: rgba(255,255,255,0.95) !important;
+            border: 2px solid rgba(102, 126, 234, 0.2) !important;
+        }
+        
+        .background-music-controls span {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #333 !important;
+        }
+        
+        /* iOS specific background music controls */
+        @supports (-webkit-touch-callout: none) {
+            .background-music-controls {
+                padding: 25px !important;
+                border-radius: 25px !important;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.5) !important;
+                background: rgba(255,255,255,0.98) !important;
+                border: 3px solid rgba(102, 126, 234, 0.3) !important;
+            }
+            
+            .background-music-controls span {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+                color: #2c3e50 !important;
+            }
+        }
+        
+        #backgroundVolumeValue {
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            color: #333 !important;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        /* iOS specific volume value */
+        @supports (-webkit-touch-callout: none) {
+            #backgroundVolumeValue {
+                font-size: 18px !important;
+                font-weight: 700 !important;
+                color: #2c3e50 !important;
+                min-width: 50px;
+            }
+        }
     }
     
     .audio-player {
@@ -698,31 +896,80 @@ blockquote cite {
     
     /* Mobile-specific audio controls */
     .chapter-audio::-webkit-media-controls-panel {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
         border-radius: 30px;
-        height: 60px;
-        display: flex;
+        height: 60px !important;
+        min-height: 60px !important;
+        display: flex !important;
         align-items: center;
         padding: 0 10px;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* iOS Safari specific media controls */
+    @supports (-webkit-touch-callout: none) {
+        .chapter-audio::-webkit-media-controls-panel {
+            height: 70px !important;
+            min-height: 70px !important;
+            border-radius: 35px;
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+        }
     }
     
     .chapter-audio::-webkit-media-controls-play-button,
     .chapter-audio::-webkit-media-controls-pause-button {
-        background: white;
+        background: white !important;
         border-radius: 50%;
-        color: #667eea;
-        width: 40px;
-        height: 40px;
+        color: #667eea !important;
+        width: 45px !important;
+        height: 45px !important;
+        min-width: 45px !important;
+        min-height: 45px !important;
         border: none;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* iOS Safari specific play/pause buttons */
+    @supports (-webkit-touch-callout: none) {
+        .chapter-audio::-webkit-media-controls-play-button,
+        .chapter-audio::-webkit-media-controls-pause-button {
+            width: 50px !important;
+            height: 50px !important;
+            min-width: 50px !important;
+            min-height: 50px !important;
+            background: white !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
     }
     
     .chapter-audio::-webkit-media-controls-timeline {
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.3) !important;
         border-radius: 10px;
-        height: 4px;
+        height: 6px !important;
+        min-height: 6px !important;
         margin: 0 10px;
         flex: 1;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* iOS Safari specific timeline */
+    @supports (-webkit-touch-callout: none) {
+        .chapter-audio::-webkit-media-controls-timeline {
+            height: 8px !important;
+            min-height: 8px !important;
+            background: rgba(255, 255, 255, 0.4) !important;
+            border-radius: 4px;
+        }
     }
     
     .chapter-audio::-webkit-media-controls-current-time-display,
@@ -734,17 +981,51 @@ blockquote cite {
     }
     
     .chapter-audio::-webkit-media-controls-volume-slider {
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.3) !important;
         border-radius: 10px;
-        height: 4px;
+        height: 6px !important;
+        min-height: 6px !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* iOS Safari specific volume slider */
+    @supports (-webkit-touch-callout: none) {
+        .chapter-audio::-webkit-media-controls-volume-slider {
+            height: 8px !important;
+            min-height: 8px !important;
+            background: rgba(255, 255, 255, 0.4) !important;
+            border-radius: 4px;
+        }
     }
     
     .chapter-audio::-webkit-media-controls-mute-button {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.2) !important;
         border-radius: 50%;
-        color: white;
-        width: 30px;
-        height: 30px;
+        color: white !important;
+        width: 35px !important;
+        height: 35px !important;
+        min-width: 35px !important;
+        min-height: 35px !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* iOS Safari specific mute button */
+    @supports (-webkit-touch-callout: none) {
+        .chapter-audio::-webkit-media-controls-mute-button {
+            width: 40px !important;
+            height: 40px !important;
+            min-width: 40px !important;
+            min-height: 40px !important;
+            background: rgba(255, 255, 255, 0.3) !important;
+        }
     }
 }
 
@@ -758,6 +1039,188 @@ blockquote cite {
     .chapter-audio:focus {
         outline: 3px solid rgba(102, 126, 234, 0.5);
         outline-offset: 2px;
+    }
+    
+    /* iOS specific touch optimizations */
+    @supports (-webkit-touch-callout: none) {
+        .chapter-audio {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        .chapter-audio:active {
+            transform: scale(0.95);
+            transition: transform 0.15s ease;
+        }
+        
+        /* Force iOS to show all controls */
+        .chapter-audio::-webkit-media-controls {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .chapter-audio::-webkit-media-controls-enclosure {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            border-radius: 35px;
+            height: 70px !important;
+            min-height: 70px !important;
+        }
+        
+        /* iOS specific audio player container */
+        .audio-player {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)) !important;
+            border: 3px solid rgba(102, 126, 234, 0.3) !important;
+            border-radius: 20px !important;
+            padding: 25px !important;
+            margin: 25px 0 !important;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2) !important;
+        }
+        
+        .audio-player h3 {
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            color: #667eea !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .audio-note {
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+            color: #555 !important;
+            margin-top: 15px !important;
+        }
+    }
+}
+
+/* Additional iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Ensure audio controls are always visible on iOS */
+    .chapter-audio {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
+        border: 3px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 35px !important;
+        height: 70px !important;
+        min-height: 70px !important;
+        max-height: 70px !important;
+        width: 100% !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 10 !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* iOS Safari media controls visibility */
+    .chapter-audio::-webkit-media-controls-panel {
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
+        border-radius: 35px !important;
+        height: 70px !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 15px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* iOS Safari play/pause buttons */
+    .chapter-audio::-webkit-media-controls-play-button,
+    .chapter-audio::-webkit-media-controls-pause-button {
+        background: white !important;
+        border-radius: 50% !important;
+        color: #667eea !important;
+        width: 55px !important;
+        height: 55px !important;
+        min-width: 55px !important;
+        min-height: 55px !important;
+        border: none !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* iOS Safari timeline */
+    .chapter-audio::-webkit-media-controls-timeline {
+        background: rgba(255, 255, 255, 0.4) !important;
+        border-radius: 10px !important;
+        height: 8px !important;
+        min-height: 8px !important;
+        margin: 0 15px !important;
+        flex: 1 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* iOS Safari volume slider */
+    .chapter-audio::-webkit-media-controls-volume-slider {
+        background: rgba(255, 255, 255, 0.4) !important;
+        border-radius: 10px !important;
+        height: 8px !important;
+        min-height: 8px !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* iOS Safari mute button */
+    .chapter-audio::-webkit-media-controls-mute-button {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-radius: 50% !important;
+        color: white !important;
+        width: 45px !important;
+        height: 45px !important;
+        min-width: 45px !important;
+        min-height: 45px !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* iOS Safari time displays */
+    .chapter-audio::-webkit-media-controls-current-time-display,
+    .chapter-audio::-webkit-media-controls-time-remaining-display {
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
 
@@ -941,5 +1404,309 @@ body.blurred .page {
     
     .modal-footer {
         padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+}
+
+/* Donation Section Styles */
+.donation-page {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.donation-page::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 40%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    transform: rotate(15deg);
+}
+
+.donation-content {
+    margin-top: 2rem;
+    flex: 1;
+}
+
+.donation-intro {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.donation-intro p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.donation-intro ul {
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+}
+
+.donation-intro li {
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.donation-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.donation-option {
+    display: flex;
+    justify-content: center;
+}
+
+.donation-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.donation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-color: #667eea;
+}
+
+.donation-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.donation-card h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.donation-card p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.donation-amounts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.amount-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.amount-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.custom-amount-btn {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.custom-amount-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+.bank-details {
+    margin-top: 1rem;
+}
+
+.bank-info {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: left;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.qr-code-section {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.qr-code-section h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.qr-code-container {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: inline-block;
+}
+
+.qr-code-image {
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.qr-note {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+.crypto-addresses {
+    margin-top: 1rem;
+}
+
+.crypto-option {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.crypto-option strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.crypto-address {
+    background: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    word-break: break-all;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.copy-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+.donation-note {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border-left: 4px solid #667eea;
+    padding: 1.5rem;
+    border-radius: 0 10px 10px 0;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.donation-note p {
+    margin: 0;
+    font-style: italic;
+    color: #2c3e50;
+}
+
+.thank-you-message {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+    border-radius: 15px;
+}
+
+.thank-you-message h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+.thank-you-message p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #2c3e50;
+}
+
+/* Mobile Responsive for Donation */
+@media screen and (max-width: 768px) {
+    .donation-options {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .donation-card {
+        padding: 1.5rem;
+    }
+    
+    .donation-amounts {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .amount-btn {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .bank-info {
+        font-size: 0.8rem;
+    }
+    
+    .crypto-address {
+        font-size: 0.7rem;
+    }
+    
+    .qr-code-image {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .qr-code-section h4 {
+        font-size: 1rem;
     }
 }
