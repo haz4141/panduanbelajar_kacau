@@ -36,6 +36,28 @@
                 document.body.style.overflow = 'auto';
                 // Show Chatbase chatbot after password is correct
                 showChatbaseWidget();
+                
+                // Fix audio initialization after password entry
+                setTimeout(() => {
+                    const audio = document.getElementById('backgroundMusic');
+                    if (audio) {
+                        // Reset audio properties
+                        audio.playbackRate = 1.0;
+                        audio.currentTime = 0;
+                        audio.volume = 0.05;
+                        
+                        // Force reload and proper initialization
+                        audio.load();
+                        setTimeout(() => {
+                            audio.playbackRate = 1.0;
+                            audio.volume = 0.05;
+                            audio.play().catch(e => {
+                                console.log('Audio autoplay blocked after password');
+                            });
+                        }, 200);
+                    }
+                }, 100);
+                
                 // Initialize mobile audio after user interaction
                 setTimeout(initMobileAudio, 500);
                 // Initialize background music control
@@ -90,10 +112,30 @@
         function startMusic() {
             const audio = document.getElementById('backgroundMusic');
             if (audio) {
-                audio.volume = 0.05; // Set default volume to 5%
-                audio.play().catch(e => {
-                    console.log('Background music autoplay blocked, will start on user interaction');
-                });
+                // Reset audio properties to ensure normal playback
+                audio.volume = 0.05;
+                audio.playbackRate = 1.0; // Ensure normal playback speed
+                audio.currentTime = 0; // Reset to beginning
+                
+                // Force audio reload for iOS
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                
+                if (isIOS) {
+                    // iOS specific audio initialization
+                    audio.load();
+                    setTimeout(() => {
+                        audio.playbackRate = 1.0;
+                        audio.volume = 0.05;
+                        audio.play().catch(e => {
+                            console.log('iOS background music autoplay blocked, will start on user interaction');
+                        });
+                    }, 100);
+                } else {
+                    audio.play().catch(e => {
+                        console.log('Background music autoplay blocked, will start on user interaction');
+                    });
+                }
             }
         }
         
@@ -845,6 +887,11 @@
             const audio = document.getElementById('backgroundMusic');
             
             if (slider && value && audio) {
+                // Ensure audio properties are correct
+                audio.playbackRate = 1.0;
+                audio.volume = 0.05;
+                audio.currentTime = 0;
+                
                 let isDragging = false;
                 let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                 const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || 
@@ -854,6 +901,9 @@
                 function updateVolume(volumeValue) {
                     const volume = Math.max(0, Math.min(1, volumeValue / 100));
                     
+                    // Always ensure playback rate is normal
+                    audio.playbackRate = 1.0;
+                    
                     if (isIOS) {
                         console.log('iOS background music volume update:', volume);
                         
@@ -862,21 +912,25 @@
                         
                         // Multiple attempts to set volume on iOS
                         setTimeout(() => {
+                            audio.playbackRate = 1.0;
                             audio.volume = volume;
                             console.log('iOS volume attempt 1:', volume);
                         }, 10);
                         
                         setTimeout(() => {
+                            audio.playbackRate = 1.0;
                             audio.volume = volume;
                             console.log('iOS volume attempt 2:', volume);
                         }, 50);
                         
                         setTimeout(() => {
+                            audio.playbackRate = 1.0;
                             audio.volume = volume;
                             console.log('iOS volume attempt 3:', volume);
                         }, 100);
                         
                         setTimeout(() => {
+                            audio.playbackRate = 1.0;
                             audio.volume = volume;
                             console.log('iOS volume attempt 4:', volume);
                         }, 200);
@@ -886,6 +940,7 @@
                             audio.pause();
                             setTimeout(() => {
                                 audio.load();
+                                audio.playbackRate = 1.0;
                                 console.log('iOS audio reloaded for volume 0');
                             }, 100);
                         }
@@ -893,6 +948,7 @@
                         // Additional iOS volume enforcement
                         setTimeout(() => {
                             if (Math.abs(audio.volume - volume) > 0.01) {
+                                audio.playbackRate = 1.0;
                                 audio.volume = volume;
                                 console.log('iOS volume enforcement:', volume);
                             }
@@ -900,6 +956,7 @@
                         
                     } else {
                         // Standard volume setting for non-iOS
+                        audio.playbackRate = 1.0;
                         audio.volume = volume;
                         console.log('Standard volume set to:', volume);
                     }
